@@ -13,7 +13,8 @@ function App() {
         </div>
         <img src="/god_cat.jpg" alt="6502 Cat" style={{ marginTop: '20px', border: '2px solid #000', maxWidth: '300px', width: '80%', height: 'auto' }} />
       </div>
-      <marquee><h1>=== THE GOD CAT - AFDOB ===</h1></marquee>
+      <h1>=== THE GOD CAT - AFDOB ===</h1>
+      <h2>Keep this page somewhere on your website directory or you may have bad luck.</h2>
     </div>
 
   );
