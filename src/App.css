@@ -41,6 +41,11 @@ html, body, .App {
 .credits-list a.prof-link:hover, .credits-list a.prof-link:focus-visible { color:#003fbf; }
 .prof-link:hover, .prof-link:focus-visible { color:#003fbf; }
 .single-line { white-space:nowrap; }
+@media (max-width: 640px) {
+  .single-line { white-space:normal; }
+  .credits-list { max-width:100%; }
+  .credits-list li { word-break:break-word; }
+}
 
 body { margin: 0; }
 
