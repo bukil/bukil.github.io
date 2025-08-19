@@ -9,11 +9,11 @@ function App() {
         <h2 id="credits-heading" className="credits-title garamond">Contributions and Credits</h2>
         <div className="credits-divider" aria-hidden="true" />
         <ul className="credits-list" aria-label="Contributor list">
-          <li><a href="#" rel="noopener noreferrer">This project was carried out as part of Project 2 at IDC, IIT Bombay, under the guidance of Professor Girish Dalvi.</a></li>
-          <li><a href="#" rel="noopener noreferrer">A. Rao – Data Geometry</a></li>
-          <li><a href="#" rel="noopener noreferrer">L. Chen – Spectral Models</a></li>
-          <li><a href="#" rel="noopener noreferrer">S. Patel – Interaction Design</a></li>
-          <li><a href="#" rel="noopener noreferrer">J. Singh – Visualization Engine</a></li>
+          <li><span className="contrib-item">This project was carried out as part of Project 2 at IDC, IIT Bombay, under the guidance of Professor Girish Dalvi.</span></li>
+          <li><span className="contrib-item">A. Rao – Data Geometry</span></li>
+          <li><span className="contrib-item">L. Chen – Spectral Models</span></li>
+          <li><span className="contrib-item">S. Patel – Interaction Design</span></li>
+          <li><span className="contrib-item">J. Singh – Visualization Engine</span></li>
         </ul>
       </section>
       <footer className="site-footer" role="contentinfo">

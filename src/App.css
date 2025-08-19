@@ -35,6 +35,7 @@ html, body, .App {
 .credits-list li { font-size:.75rem; letter-spacing:.1px; line-height:1.35; }
 .credits-list a { color:#222; text-decoration:none; border:0; padding:.05rem 0; transition:color .25s; }
 .credits-list a:hover, .credits-list a:focus-visible { color:#000; }
+.contrib-item { display:inline-block; color:#222; }
 
 body { margin: 0; }
 
