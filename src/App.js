@@ -9,7 +9,7 @@ function App() {
         <h2 id="credits-heading" className="credits-title garamond">Contributions and Credits</h2>
         <div className="credits-divider" aria-hidden="true" />
         <ul className="credits-list" aria-label="Contributor list">
-          <li><span className="contrib-item">This project was carried out as part of Project 2 at IDC, IIT Bombay, under the guidance of Professor Girish Dalvi.</span></li>
+          <li><span className="contrib-item single-line">This project was carried out as part of Project 2 at IDC, IIT Bombay, under the guidance of <a className="prof-link" href="https://www.idc.iitb.ac.in/people/phd/girish-vinod-dalvi" target="_blank" rel="noopener noreferrer">Professor Girish Dalvi.</a></span></li>
           <li><span className="contrib-item">A. Rao – Data Geometry</span></li>
           <li><span className="contrib-item">L. Chen – Spectral Models</span></li>
           <li><span className="contrib-item">S. Patel – Interaction Design</span></li>
