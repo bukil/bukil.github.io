@@ -1,11 +1,15 @@
 
 import './App.css';
 import Footer from './Footer';
+import ProjectorScene from './ProjectorScene';
 
 function App() {
   return (
     <div className="App">
       <h3 className="hero-title garamond">Geometry of color</h3>
+      <div className="three-intro full-bleed" aria-label="3D introduction scene">
+        <ProjectorScene />
+      </div>
 
       <section className="credits-section" aria-labelledby="credits-heading">
         <h2 id="credits-heading" className="credits-title garamond">REFERENCES</h2>
