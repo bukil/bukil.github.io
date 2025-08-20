@@ -173,12 +173,17 @@ body { margin: 0; }
 .name { font-weight:600; }
 .cc-license { display:flex; flex-direction:row; align-items:center; gap:.75rem; max-width:520px; }
 .cc-by-icon { width:75px; height:auto; display:block; filter:grayscale(100%) contrast(120%); }
-.cc-icons { display:inline-flex; align-items:center; gap:.35rem; font-size:.7rem; font-weight:600; letter-spacing:.5px; }
+.cc-license > img:first-child { margin-left:0; }
+.idc-logo { width:220px; height:auto; display:block; }
+.cc-by-icon { width:64px; height:auto; display:block; }
 .cc-text { font-family: var(--font-stack); color:#555; }
 .license-text { font-size:.7rem; line-height:1.4; }
 @media (max-width:680px){
   .footer-inner { flex-direction:column; text-align:center; }
-  .cc-license { flex-direction:column; }
+  .cc-license { flex-direction:column; max-width:100%; }
+  .idc-logo { width:190px; }
+  .cc-by-icon { width:56px; }
+  .license-text { text-align:center; }
 }
 
 /* Responsive tweaks */
