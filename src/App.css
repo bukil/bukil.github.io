@@ -24,8 +24,9 @@ html, body { overflow-x:hidden; }
 .App { display:flex; align-items:center; justify-content:center; padding:6vh 4vw; }
 
 .garamond { font-family: 'EB Garamond', serif; font-weight:600; letter-spacing:.5px; }
+.playfair { font-family: 'Playfair Display', 'EB Garamond', serif; font-weight:600; letter-spacing:.5px; }
 
-.App > .hero-title { margin:0; font-size: clamp(2.8rem,7vw,5.2rem); line-height:1.05; letter-spacing:-1px; font-weight:600; }
+.App > .hero-title { margin:0; font-size: clamp(2.8rem,7vw,5.2rem); line-height:1.05; letter-spacing:-1px; font-weight:600; align-self:flex-start; margin-left:clamp(.75rem,4vw,3rem); }
 
 /* 3D intro canvas (full content width without causing horizontal scroll) */
 .three-intro { width:100%; max-width:1400px; height:60vh; background:#000; border-radius:0; margin:2rem auto 1.5rem; overflow:hidden; }

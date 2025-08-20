@@ -37,7 +37,57 @@ export default function ProjectorScene() {
     controls.maxDistance = 10;
     controls.maxPolarAngle = Math.PI / 2;
     controls.target.set(0, 1, 0);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
     controls.update();
+
+    // --- Restrict mouse interaction to a small central zone of the canvas ---
+    // Adjust this fraction (0 < fraction <= 1) to change interactive region size.
+    const INTERACTIVE_FRACTION = 0.4; // 40% of width & height centered
+    let lastInside = false;
+
+    function updateControlsRegion(clientX, clientY) {
+      const rect = renderer.domElement.getBoundingClientRect();
+      const x = clientX - rect.left;
+      const y = clientY - rect.top;
+      const xNorm = x / rect.width;
+      const yNorm = y / rect.height;
+      const half = INTERACTIVE_FRACTION / 2;
+      const inside = xNorm >= 0.5 - half && xNorm <= 0.5 + half && yNorm >= 0.5 - half && yNorm <= 0.5 + half;
+      if (inside !== lastInside) {
+        controls.enabled = inside; // Only allow OrbitControls inside region
+        renderer.domElement.style.cursor = inside ? 'grab' : 'default';
+        lastInside = inside;
+      }
+    }
+
+    function handlePointerMove(e) {
+      updateControlsRegion(e.clientX, e.clientY);
+    }
+
+    function handlePointerDown(e) {
+      updateControlsRegion(e.clientX, e.clientY);
+      // If outside region, let event bubble so page interactions continue
+      if (!controls.enabled) return; // inside region -> OrbitControls will capture
+    }
+
+    function handleWheel(e) {
+      // Re-evaluate region (wheel can occur without pointermove on some devices)
+      updateControlsRegion(e.clientX, e.clientY);
+      if (!controls.enabled) {
+        // Allow page scroll (do not preventDefault)
+        return;
+      }
+      // Inside interactive zone: let OrbitControls process zoom (it already attaches a wheel listener)
+    }
+
+    renderer.domElement.addEventListener('pointermove', handlePointerMove);
+    renderer.domElement.addEventListener('pointerdown', handlePointerDown, { capture: true });
+    renderer.domElement.addEventListener('wheel', handleWheel, { passive: true });
+
+    // Initialize state (center assumed; set enabled=false until pointer enters)
+    controls.enabled = false;
+    renderer.domElement.style.cursor = 'default';
 
     scene.add(new THREE.HemisphereLight(0xffffff, 0x444444, 0.25));
 
@@ -108,7 +158,10 @@ export default function ProjectorScene() {
       cancelAnimationFrame(rafId);
   window.removeEventListener('resize', resize);
   ro.disconnect();
-      controls.dispose();
+  renderer.domElement.removeEventListener('pointermove', handlePointerMove);
+  renderer.domElement.removeEventListener('pointerdown', handlePointerDown, { capture: true });
+  renderer.domElement.removeEventListener('wheel', handleWheel, { passive: true });
+  controls.dispose();
       renderer.dispose();
       container.removeChild(renderer.domElement);
     };
