@@ -10,15 +10,15 @@ function App() {
         <div className="credits-divider" aria-hidden="true" />
         <ul className="credits-list" aria-label="Contributor list">
           <li><span className="contrib-item single-line">This project was carried out as part of Project 2 at IDC, IIT Bombay, under the guidance of <a className="prof-link" href="https://www.idc.iitb.ac.in/people/phd/girish-vinod-dalvi" target="_blank" rel="noopener noreferrer">Professor Girish Dalvi.</a></span></li>
-          <li><span className="contrib-item">A. Rao – Data Geometry</span></li>
-          <li><span className="contrib-item">L. Chen – Spectral Models</span></li>
-          <li><span className="contrib-item">S. Patel – Interaction Design</span></li>
-          <li><span className="contrib-item">J. Singh – Visualization Engine</span></li>
+          <li><span className="contrib-item">xxxxxx – Data Geometry</span></li>
+          <li><span className="contrib-item">xxxxxx – Spectral Models</span></li>
+          <li><span className="contrib-item">xxxxxx – Interaction Design</span></li>
+          <li><span className="contrib-item">xxxxxx – Visualization Engine</span></li>
         </ul>
       </section>
       <footer className="site-footer" role="contentinfo">
         <div className="footer-inner">
-          <p className="credit">Research, design & development by <span className="name">Mukil</span>.</p>
+          <p className="credit">Research, design & development by <span className="name">Mukil Kumar</span>.</p>
           <div className="cc-license" aria-label="Creative Commons Attribution 4.0 International License">
             <span className="cc-icons" aria-hidden="true">
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
