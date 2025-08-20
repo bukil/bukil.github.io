@@ -21,13 +21,14 @@ export default function ProjectorScene() {
     camera.position.set(7, 4, 1);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setPixelRatio(window.devicePixelRatio);
+  // Clamp pixel ratio to avoid huge GPU cost on very dense screens
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(width, height);
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.0;
+  renderer.toneMappingExposure = 1.25;
     container.appendChild(renderer.domElement);
     renderer.domElement.classList.add('three-canvas');
 
@@ -46,7 +47,7 @@ export default function ProjectorScene() {
     ground.receiveShadow = true;
     scene.add(ground);
 
-    const spot = new THREE.SpotLight(0xffffff, 80, 0, Math.PI / 6, 1, 2);
+  const spot = new THREE.SpotLight(0xffffff, 1000, 0, Math.PI / 5.5, 1, 2);
     spot.position.set(2.5, 5, 2.5);
     spot.castShadow = true;
     spot.shadow.mapSize.set(1024, 1024);
@@ -71,6 +72,20 @@ export default function ProjectorScene() {
       scene.add(mesh);
     });
 
+    // Responsive resize (window + element size changes)
+    const resize = () => {
+      if (!mountRef.current) return;
+      const w = mountRef.current.clientWidth;
+      const h = mountRef.current.clientHeight;
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, h, false);
+    };
+    window.addEventListener('resize', resize);
+    // ResizeObserver for container (captures flex/layout changes not triggering window resize)
+    const ro = new ResizeObserver(() => resize());
+    ro.observe(container);
+
     let rafId;
     const animate = () => {
       const t = performance.now() / 3000;
@@ -82,19 +97,13 @@ export default function ProjectorScene() {
     };
     animate();
 
-    const handleResize = () => {
-      if (!mountRef.current) return;
-      const w = mountRef.current.clientWidth;
-      const h = mountRef.current.clientHeight;
-      camera.aspect = w / h;
-      camera.updateProjectionMatrix();
-      renderer.setSize(w, h, false);
-    };
-    window.addEventListener('resize', handleResize);
+  // Initial size sync in case fonts/layout shift after mount
+  setTimeout(resize, 0);
 
     return () => {
       cancelAnimationFrame(rafId);
-      window.removeEventListener('resize', handleResize);
+  window.removeEventListener('resize', resize);
+  ro.disconnect();
       controls.dispose();
       renderer.dispose();
       container.removeChild(renderer.domElement);
