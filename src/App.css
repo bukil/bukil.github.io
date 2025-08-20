@@ -172,6 +172,7 @@ body { margin: 0; }
 .credit { margin:0; font-size:.78rem; letter-spacing:.15px; }
 .name { font-weight:600; }
 .cc-license { display:flex; flex-direction:row; align-items:center; gap:.75rem; max-width:520px; }
+.cc-by-icon { width:75px; height:auto; display:block; filter:grayscale(100%) contrast(120%); }
 .cc-icons { display:inline-flex; align-items:center; gap:.35rem; font-size:.7rem; font-weight:600; letter-spacing:.5px; }
 .cc-text { font-family: var(--font-stack); color:#555; }
 .license-text { font-size:.7rem; line-height:1.4; }
