@@ -55,8 +55,12 @@ export default function ProjectorScene() {
     scene.add(spot);
     scene.add(spot.target);
 
-    new THREE.TextureLoader().load('https://threejs.org/examples/textures/uv_grid_opengl.jpg', tex => {
+    // Use the colors.png texture from the original reference example
+    new THREE.TextureLoader().load('https://threejs.org/examples/textures/colors.png', tex => {
       tex.colorSpace = THREE.SRGBColorSpace;
+      tex.minFilter = THREE.LinearFilter;
+      tex.magFilter = THREE.LinearFilter;
+      tex.generateMipmaps = false;
       spot.map = tex;
     });
 
