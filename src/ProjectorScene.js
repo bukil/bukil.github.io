@@ -6,6 +6,7 @@ import { PLYLoader } from 'three/examples/jsm/loaders/PLYLoader.js';
 // Three.js projector-like spotlight scene inside a React component
 export default function ProjectorScene() {
   const mountRef = useRef(null);
+  const buttonsRef = useRef(null);
 
   useEffect(() => {
     const container = mountRef.current;
@@ -32,7 +33,7 @@ export default function ProjectorScene() {
     container.appendChild(renderer.domElement);
     renderer.domElement.classList.add('three-canvas');
 
-    const controls = new OrbitControls(camera, renderer.domElement);
+  const controls = new OrbitControls(camera, renderer.domElement);
     controls.minDistance = 2;
     controls.maxDistance = 10;
     controls.maxPolarAngle = Math.PI / 2;
@@ -105,14 +106,101 @@ export default function ProjectorScene() {
     scene.add(spot);
     scene.add(spot.target);
 
-    // Use the colors.png texture from the original reference example
-    new THREE.TextureLoader().load('https://threejs.org/examples/textures/colors.png', tex => {
+    // --- Projection texture variants ---
+  const loader = new THREE.TextureLoader();
+  const textureVariants = { base: null, disturb: null };
+  let activeKey = 'base';
+
+    // Base texture (existing colors grid)
+    loader.load('https://threejs.org/examples/textures/colors.png', tex => {
       tex.colorSpace = THREE.SRGBColorSpace;
       tex.minFilter = THREE.LinearFilter;
       tex.magFilter = THREE.LinearFilter;
       tex.generateMipmaps = false;
-      spot.map = tex;
+      textureVariants.base = tex;
+      if (activeKey === 'base') spot.map = tex;
     });
+
+    // Disturb procedural noise (dynamic canvas)
+    const noiseCanvas = document.createElement('canvas');
+    noiseCanvas.width = 256; noiseCanvas.height = 256;
+    const nctx = noiseCanvas.getContext('2d');
+    const noiseTexture = new THREE.CanvasTexture(noiseCanvas);
+    noiseTexture.colorSpace = THREE.SRGBColorSpace;
+    noiseTexture.minFilter = THREE.LinearFilter;
+    noiseTexture.magFilter = THREE.LinearFilter;
+    textureVariants.disturb = noiseTexture;
+    let lastNoiseTime = 0;
+    function updateNoise(time) {
+      if (time - lastNoiseTime < 110) return; // update ~9fps
+      lastNoiseTime = time;
+      const w = noiseCanvas.width, h = noiseCanvas.height;
+      const imgData = nctx.createImageData(w, h);
+      for (let i = 0; i < imgData.data.length; i += 4) {
+        // layered turbulence-ish value
+        const x = (i/4) % w;
+        const y = ((i/4) / w)|0;
+        const v = (
+          128 + 90 * Math.sin(x * 0.07 + time * 0.0008) * Math.sin(y * 0.05 + time * 0.0013) +
+          40 * Math.sin((x+y) * 0.12 + time * 0.0006)
+        );
+        // blue-ish caustic feel
+        imgData.data[i] = v * 0.3;      // R
+        imgData.data[i+1] = v * 0.8;    // G
+        imgData.data[i+2] = 180 + v * 0.2; // B
+        imgData.data[i+3] = 255;        // A
+      }
+      nctx.putImageData(imgData, 0, 0);
+      noiseTexture.needsUpdate = true;
+    }
+
+    function applyTexture(key) {
+      activeKey = key;
+      spot.map = textureVariants[key];
+      if (key === 'disturb') {
+        renderer.toneMappingExposure = 1.35;
+        spot.intensity = 1100;
+      } else {
+        renderer.toneMappingExposure = 1.25;
+        spot.intensity = 1000;
+      }
+      // update single switch visual
+      if (buttonsRef.current) {
+        const btn = buttonsRef.current;
+        if (key === 'disturb') {
+          btn.style.background = 'rgba(30,140,255,0.25)';
+          btn.style.borderColor = 'rgba(30,140,255,0.55)';
+        } else {
+          btn.style.background = 'rgba(255,255,255,0.12)';
+          btn.style.borderColor = 'rgba(255,255,255,0.35)';
+        }
+      }
+    }
+
+    // Single circular toggle button (no text)
+    const toggleBtn = document.createElement('button');
+    toggleBtn.type = 'button';
+    toggleBtn.setAttribute('aria-label', 'Toggle projection texture');
+    Object.assign(toggleBtn.style, {
+      position: 'absolute', top: '10px', right: '12px',
+      width: '42px', height: '42px', borderRadius: '50%',
+      border: '1px solid rgba(255,255,255,0.35)', background: 'rgba(255,255,255,0.12)', cursor: 'pointer',
+      display: 'block', padding: '0',
+      backdropFilter: 'blur(4px)', WebkitBackdropFilter: 'blur(4px)',
+      transition: 'background .35s, border-color .35s, transform .25s', zIndex: '10'
+    });
+    toggleBtn.onmouseenter = () => { toggleBtn.style.transform='scale(1.08)'; };
+    toggleBtn.onmouseleave = () => { toggleBtn.style.transform='scale(1)'; };
+    toggleBtn.onmousedown = () => { toggleBtn.style.transform='scale(.9)'; };
+    toggleBtn.onmouseup = () => { toggleBtn.style.transform='scale(1.08)'; };
+    toggleBtn.onclick = () => {
+      applyTexture(activeKey === 'base' ? 'disturb' : 'base');
+    };
+    container.style.position = 'relative';
+    container.appendChild(toggleBtn);
+    buttonsRef.current = toggleBtn;
+  // Initialize visual state
+  applyTexture(activeKey);
 
     new PLYLoader().load('https://threejs.org/examples/models/ply/binary/Lucy100k.ply', geometry => {
       geometry.scale(0.0024, 0.0024, 0.0024);
@@ -142,10 +230,12 @@ export default function ProjectorScene() {
 
     let rafId;
     const animate = () => {
-      const t = performance.now() / 3000;
+      const now = performance.now();
+      const t = now / 3000;
       spot.position.x = Math.cos(t) * 2.5;
       spot.position.z = Math.sin(t) * 2.5;
       spot.target.position.set(0, 1, 0);
+      if (activeKey === 'disturb') updateNoise(now);
       renderer.render(scene, camera);
       rafId = requestAnimationFrame(animate);
     };
@@ -161,11 +251,12 @@ export default function ProjectorScene() {
   renderer.domElement.removeEventListener('pointermove', handlePointerMove);
   renderer.domElement.removeEventListener('pointerdown', handlePointerDown, { capture: true });
   renderer.domElement.removeEventListener('wheel', handleWheel, { passive: true });
-  controls.dispose();
+    controls.dispose();
       renderer.dispose();
       container.removeChild(renderer.domElement);
+  if (toggleBtn && toggleBtn.parentNode === container) container.removeChild(toggleBtn);
     };
   }, []);
 
-  return <div ref={mountRef} style={{ width: '100%', height: '100%' }} />;
+  return <div ref={mountRef} style={{ position: 'relative', width: '100%', height: '100%' }} />;
 }
