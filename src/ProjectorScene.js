@@ -108,7 +108,8 @@ export default function ProjectorScene() {
 
     // --- Projection texture variants ---
   const loader = new THREE.TextureLoader();
-  const textureVariants = { base: null, disturb: null };
+  const textureVariants = { base: null, disturb: null, tex1: null };
+  const cycleOrder = ['base','disturb','tex1'];
   let activeKey = 'base';
 
     // Base texture (existing colors grid)
@@ -121,7 +122,7 @@ export default function ProjectorScene() {
       if (activeKey === 'base') spot.map = tex;
     });
 
-    // Disturb procedural noise (dynamic canvas)
+  // Disturb procedural noise (dynamic canvas)
     const noiseCanvas = document.createElement('canvas');
     noiseCanvas.width = 256; noiseCanvas.height = 256;
     const nctx = noiseCanvas.getContext('2d');
@@ -154,15 +155,26 @@ export default function ProjectorScene() {
       noiseTexture.needsUpdate = true;
     }
 
+    // Local image texture (texture1.jpg in /public)
+    loader.load('/texture1.jpg', tex => {
+      tex.colorSpace = THREE.SRGBColorSpace;
+      tex.minFilter = THREE.LinearFilter;
+      tex.magFilter = THREE.LinearFilter;
+      tex.generateMipmaps = false;
+      textureVariants.tex1 = tex;
+      if (activeKey === 'tex1') spot.map = tex;
+    });
+
     function applyTexture(key) {
       activeKey = key;
       spot.map = textureVariants[key];
-      if (key === 'disturb') {
-        renderer.toneMappingExposure = 1.35;
-        spot.intensity = 1100;
-      } else {
-        renderer.toneMappingExposure = 1.25;
-        spot.intensity = 1000;
+      switch (key) {
+        case 'disturb':
+          renderer.toneMappingExposure = 1.35; spot.intensity = 1100; break;
+        case 'tex1':
+          renderer.toneMappingExposure = 1.28; spot.intensity = 1050; break;
+        default:
+          renderer.toneMappingExposure = 1.25; spot.intensity = 1000; break;
       }
       // update single switch visual
       if (buttonsRef.current) {
@@ -170,6 +182,9 @@ export default function ProjectorScene() {
         if (key === 'disturb') {
           btn.style.background = 'rgba(30,140,255,0.25)';
           btn.style.borderColor = 'rgba(30,140,255,0.55)';
+        } else if (key === 'tex1') {
+          btn.style.background = 'rgba(255,170,60,0.22)';
+          btn.style.borderColor = 'rgba(255,170,60,0.55)';
         } else {
           btn.style.background = 'rgba(255,255,255,0.12)';
           btn.style.borderColor = 'rgba(255,255,255,0.35)';
@@ -194,7 +209,11 @@ export default function ProjectorScene() {
     toggleBtn.onmousedown = () => { toggleBtn.style.transform='scale(.9)'; };
     toggleBtn.onmouseup = () => { toggleBtn.style.transform='scale(1.08)'; };
     toggleBtn.onclick = () => {
-      applyTexture(activeKey === 'base' ? 'disturb' : 'base');
+      // cycle through textures
+      const idx = cycleOrder.indexOf(activeKey);
+      const next = cycleOrder[(idx + 1) % cycleOrder.length];
+      // If next texture not yet loaded (case for tex1), still switch – map may update when load finishes
+      applyTexture(next);
     };
     container.style.position = 'relative';
     container.appendChild(toggleBtn);
