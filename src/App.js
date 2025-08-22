@@ -6,7 +6,7 @@ import ProjectorScene from './ProjectorScene';
 function App() {
   return (
     <div className="App">
-  <h3 className="hero-title playfair">XXXXXXXX of color</h3>
+  <h3 className="hero-title playfair">XXXXXXXXX of color</h3>
       <div className="three-intro full-bleed" aria-label="3D introduction scene">
         <ProjectorScene />
       </div>
@@ -39,7 +39,8 @@ function App() {
         <div className="credits-divider" aria-hidden="true" />
         <ul className="credits-list" aria-label="Contributor list">
           <li><span className="contrib-item single-line">This project was carried out as part of Project 2 at IDC, IIT Bombay, under the guidance of <a className="prof-link" href="https://www.idc.iitb.ac.in/people/phd/girish-vinod-dalvi" target="_blank" rel="noopener noreferrer">Professor Girish Dalvi.</a></span></li>
-          <li><span className="contrib-item">xxxxxx – Data Geometry</span></li>
+          <li><span className="contrib-item single-line">Data Geometry <a className="prof-link" href="https://in.linkedin.com/in/sumant-rao-a5aaa042" target="_blank" rel="noopener noreferrer">Professor Sumant Rao.</a></span></li>
+          <li><span className="contrib-item">Professor Sumant Rao– Data Geometry</span></li>
           <li><span className="contrib-item">xxxxxx – Spectral Models</span></li>
           <li><span className="contrib-item">xxxxxx – Interaction Design</span></li>
           <li><span className="contrib-item">xxxxxx – Visualization Engine</span></li>
