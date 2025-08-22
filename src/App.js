@@ -6,7 +6,7 @@ import ProjectorScene from './ProjectorScene';
 function App() {
   return (
     <div className="App">
-  <h3 className="hero-title playfair">Geometry of color</h3>
+  <h3 className="hero-title playfair">XXXXXXXX of color</h3>
       <div className="three-intro full-bleed" aria-label="3D introduction scene">
         <ProjectorScene />
       </div>
