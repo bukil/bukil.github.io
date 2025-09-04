@@ -37,6 +37,16 @@ When we bring Colour into the digital world, things get even trickier. Computers
         </div>
       </section>
 
+      {/* What is Colour? section (title only) */}
+      <section id="what-is-colour" data-topic="What is Colour?" className="credits-section" aria-labelledby="wic-heading">
+        <div className="box-line">
+          <h2 id="wic-heading" className="credits-title garamond">What is Colour?</h2>
+          <p className="intro-text">
+            Colour is not a property of objects themselves, but a perception created in our brain. When light hits an object, some wavelengths are absorbed and others are reflected. Our eyes capture this reflected light, and the brain transforms it into the experience we call Colour.
+          </p>
+        </div>
+      </section>
+
   <section id="references" data-topic="References" className="credits-section" aria-labelledby="references-heading">
         <h2 id="references-heading" className="credits-title garamond">REFERENCES</h2>
         <div className="credits-divider" aria-hidden="true" />
