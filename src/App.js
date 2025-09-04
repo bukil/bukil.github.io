@@ -7,7 +7,7 @@ import ScrollRail from './ScrollRail';
 function App() {
   return (
     <div className="App">
-  <h3 id="hero" data-topic="XXXXXXXXX of color" className="hero-title playfair">XXXXXXXXX of color</h3>
+  <h3 id="hero" data-topic="XXXXXXXXX of color" className="hero-title playfair">Space of color</h3>
       <div id="intro" className="three-intro full-bleed" aria-label="3D introduction scene">
         <ProjectorScene />
       </div>
@@ -40,7 +40,7 @@ When we bring Colour into the digital world, things get even trickier. Computers
       {/* What is Colour? section (title only) */}
       <section id="what-is-colour" data-topic="What is Colour?" className="credits-section" aria-labelledby="wic-heading">
         <div className="box-line">
-          <h2 id="wic-heading" className="credits-title garamond">What is Colour?</h2>
+          <h2 id="wic-heading" className="credits-title garamond">WHAT IS COLOUR?</h2>
           <p className="intro-text">
             Colour is not a property of objects themselves, but a perception created in our brain. When light hits an object, some wavelengths are absorbed and others are reflected. Our eyes capture this reflected light, and the brain transforms it into the experience we call Colour.
           </p>
