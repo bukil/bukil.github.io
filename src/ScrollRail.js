@@ -1,9 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
-
-function getScrollableHeight() {
-  const h = document.documentElement;
-  return Math.max(1, h.scrollHeight - window.innerHeight);
-}
+import React, { useEffect, useState } from 'react';
 
 export default function ScrollRail() {
   const [topics, setTopics] = useState([]); // {id, label, top}
