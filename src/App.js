@@ -18,8 +18,13 @@ function App() {
         <div className="intro-grid">
           <div className="intro-col">
             <p className="intro-text">
-              Colour is a fundamental part of design and everyday experience. It is shaped by light, objects, perception, and culture, and studied through both science and art. This project explores Colour through modern visualisation techniques, covering its theory, history, and applications. The aim is to make Colour easier to understand and more engaging for students, newcomers, and curious readers.
-            </p>
+              Colour is a surprisingly complex idea. Just when it feels simple, red is red, blue is blue, it slips into something much deeper.
+
+At its core, Colour doesn’t really “exist” in the world. Objects don’t carry Colour with them. What they do is reflect certain wavelengths of light. Our eyes capture that light, and our brain turns it into the experience we call Colour. In other words, Colour is a construction of perception, not a fixed property of things.
+
+This is why Colour is so fascinating, it lives between Physics, Biology, Mathematics and Psychology.
+
+When we bring Colour into the digital world, things get even trickier. Computers and screens try to map this messy mix of light and perception into neat systems—RGB, CMYK, Lab, and somehow it all works. The fact that a glowing screen can reproduce even a fraction of what we see in the real world is nothing short of remarkable. </p>
           </div>
           <div className="intro-col intro-slot" aria-hidden="true" />
           <div className="intro-col">
