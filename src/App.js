@@ -20,7 +20,7 @@ function App() {
             <p className="intro-text">
               Colour is a surprisingly complex idea. Just when it feels simple, red is red, blue is blue, it slips into something much deeper.
 
-At its core, Colour doesn’t really “exist” in the world. Objects don’t carry Colour with them. What they do is reflect certain wavelengths of light. Our eyes capture that light, and our brain turns it into the experience we call Colour. In other words, Colour is a construction of perception, not a fixed property of things.
+At its core, Colour doesn’t really “exist” in the world. Objects don’t carry intrinsic Colour with them. What they do is reflect certain wavelengths of light. Our eyes capture that light, and our brain turns it into the experience we call Colour. In other words, Colour is a construction of perception, not a fixed property of things.
 
 This is why Colour is so fascinating, it lives between Physics, Biology, Mathematics and Psychology.
 
@@ -31,19 +31,26 @@ When we bring Colour into the digital world, things get even trickier. Computers
             <div className="intro-meta" aria-label="Author and date">
               <div className="intro-meta__name">Mukil Kumar</div>
               <div className="intro-meta__org">IDC IIT Bombay</div>
-              <div className="intro-meta__date">Nov 2026</div>
+              <div className="intro-meta__date">MM 2026</div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* What is Colour? section (title only) */}
+      {/* What is Colour? section with right-side canvas placeholder for animation */}
       <section id="what-is-colour" data-topic="What is Colour?" className="credits-section" aria-labelledby="wic-heading">
         <div className="box-line">
-          <h2 id="wic-heading" className="credits-title garamond">WHAT IS COLOUR?</h2>
-          <p className="intro-text">
-            Colour is not a property of objects themselves, but a perception created in our brain. When light hits an object, some wavelengths are absorbed and others are reflected. Our eyes capture this reflected light, and the brain transforms it into the experience we call Colour.
-          </p>
+          <div className="box-line-grid">
+            <div className="box-col box-col--left">
+              <h2 id="wic-heading" className="credits-title garamond">WHAT IS COLOUR?</h2>
+              <p className="intro-text">
+                Colour is not an intrinsic property of objects themselves, but a perception created in our brain. When light hits an object, some wavelengths are absorbed and others are reflected. Our eyes capture this reflected light, and the brain transforms it into the experience we call Colour.
+              </p>
+            </div>
+            <div className="box-col box-col--right" aria-hidden="false">
+              <canvas className="anim-canvas" aria-label="Animation canvas" />
+            </div>
+          </div>
         </div>
       </section>
 
