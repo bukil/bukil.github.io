@@ -3,6 +3,7 @@ import './App.css';
 import Footer from './Footer';
 import ProjectorScene from './ProjectorScene';
 import ScrollRail from './ScrollRail';
+import ColorPalette from './ColorPalette';
 
 function App() {
   return (
@@ -33,19 +34,32 @@ When we bring Colour into the digital world, things get even trickier. Computers
               <div className="intro-meta__org">IDC IIT Bombay</div>
               <div className="intro-meta__date">MM 2026</div>
             </div>
+            <div style={{ marginTop: '.8rem' }} />
           </div>
         </div>
       </section>
+
+      
 
       {/* What is Colour? section with right-side canvas placeholder for animation */}
       <section id="what-is-colour" data-topic="What is Colour?" className="credits-section" aria-labelledby="wic-heading">
         <div className="what-is-content">
           <h2 id="wic-heading" className="credits-title garamond">WHAT IS COLOUR?</h2>
           <p className="intro-text">
-            Colour is not an intrinsic property of objects themselves, but a perception created in our brain. When light hits an object, some wavelengths are absorbed and others are reflected. Our eyes capture this reflected light, and the brain transforms it into the experience we call Colour.
+            Colour is not an intrinsic property of objects themselves, but a perception created in our brain. When light hits an object, some wavelengths are absorbed and others are reflected. Our eyes capture this reflected light, and the brain transforms it into the experience we call Colour.For example, an apple's skin contains pigments that absorb short waves while reflecting long waves. Our eyes are sensitive to these reflected wavelengths ; they transmit a signal to the brain, which then gets interpreted as the sensation of colour, in this case, red.
           </p>
+          <div className="what-is-grid" aria-hidden="true">
+            {/* Dense HS color grid similar to provided screenshot */}
+            <ColorPalette type="hs" rows={8} cols={22} />
+          </div>
         </div>
       </section>
+
+        {/* Types of Color Mixture section (simple, full-width) */}
+        <section id="types-of-mixture" className="credits-section" aria-labelledby="types-heading">
+          <h2 id="types-heading" className="credits-title garamond">TYPES OF COLOR MIXTURE</h2>
+          <p className="intro-text">A short introduction to additive and subtractive colour mixing. Additive mixing occurs when coloured lights combine (RGB), while subtractive mixing occurs when pigments or filters absorb wavelengths (CMY).</p>
+        </section>
 
   <section id="references" data-topic="References" className="credits-section" aria-labelledby="references-heading">
         <h2 id="references-heading" className="credits-title garamond">REFERENCES</h2>
