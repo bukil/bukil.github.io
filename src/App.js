@@ -1,6 +1,7 @@
 
 import './App.css';
 import Footer from './Footer';
+import VisibleSpectrumCanvas from './VisibleSpectrumCanvas';
 import ProjectorScene from './ProjectorScene';
 import ScrollRail from './ScrollRail';
 import ColorPalette from './ColorPalette';
@@ -16,25 +17,15 @@ function App() {
       {/* Introduction section in a 3-column horizontal grid */}
       <section id="introduction" data-topic="Introduction" className="intro-grid-section" aria-labelledby="intro-heading">
         <h2 id="intro-heading" className="visually-hidden">Introduction</h2>
-        <div className="intro-grid">
-          <div className="intro-col">
-            <p className="intro-text">
-              Colour is a surprisingly complex idea. Just when it feels simple, red is red, blue is blue, it slips into something much deeper.
-
-At its core, Colour doesn’t really “exist” in the world. Objects don’t carry intrinsic Colour with them. What they do is reflect certain wavelengths of light. Our eyes capture that light, and our brain turns it into the experience we call Colour. In other words, Colour is a construction of perception, not a fixed property of things.
-
-This is why Colour is so fascinating, it lives between Physics, Biology, Mathematics and Psychology.
-
-When we bring Colour into the digital world, things get even trickier. Computers and screens try to map this messy mix of light and perception into neat systems—RGB, CMYK, Lab, and somehow it all works. The fact that a glowing screen can reproduce even a fraction of what we see in the real world is nothing short of remarkable. </p>
-          </div>
-          <div className="intro-col intro-slot" aria-hidden="true" />
-          <div className="intro-col">
-            <div className="intro-meta" aria-label="Author and date">
-              <div className="intro-meta__name">Mukil Kumar</div>
-              <div className="intro-meta__org">IDC IIT Bombay</div>
-              <div className="intro-meta__date">MM 2026</div>
-            </div>
-            <div style={{ marginTop: '.8rem' }} />
+        <div className="intro-full" style={{maxWidth: '100vw'}}>
+          <p className="intro-text">
+            Colour is a surprisingly complex idea. Just when it feels simple, red is red, blue is blue, it slips into something much deeper. At its core, Colour doesn’t really “exist” in the world. Objects don’t carry intrinsic Colour with them. What they do is reflect certain wavelengths of light. Our eyes capture that light, and our brain turns it into the experience we call Colour. In other words, Colour is a construction of perception, not a fixed property of things. This is why Colour is so fascinating, it lives between Physics, Biology, Mathematics and Psychology. When we bring Colour into the digital world, things get even trickier. Computers and screens try to map this messy mix of light and perception into neat systems, RGB, CMYK, Lab, and somehow it all works. The fact that a glowing screen can reproduce even a fraction of what we see in the real world is nothing short of remarkable.
+          </p>
+          <div className="intro-divider" aria-hidden="true">---</div>
+          <div className="intro-meta" style={{marginTop: '1.2rem', textAlign: 'center'}}>
+            <div className="intro-meta__name">MUKIL KUMAR</div>
+            <div className="intro-meta__org">IDC IIT Bombay</div>
+            <div className="intro-meta__date">MM 2026</div>
           </div>
         </div>
       </section>
@@ -56,10 +47,30 @@ When we bring Colour into the digital world, things get even trickier. Computers
       </section>
 
         {/* Types of Color Mixture section (simple, full-width) */}
-        <section id="types-of-mixture" className="credits-section" aria-labelledby="types-heading">
-          <h2 id="types-heading" className="credits-title garamond">TYPES OF COLOR MIXTURE</h2>
-          <p className="intro-text">A short introduction to additive and subtractive colour mixing. Additive mixing occurs when coloured lights combine (RGB), while subtractive mixing occurs when pigments or filters absorb wavelengths (CMY).</p>
-        </section>
+        <section id="types-of-mixture" className="intro-grid-section" aria-labelledby="types-heading">
+
+          <div className="intro-grid" style={{ gridTemplateColumns: '1fr 1fr' }}>
+            <div className="intro-col intro-slot" />
+            <div className="intro-col">
+              <h2 id="types-heading" className="credits-title garamond">TYPES OF COLOR MIXTURE</h2>
+              <p className="intro-text">Additive and subtractive colour mixing are two basic ways of creating colours. Additive colour mixing happens when different coloured lights combine, mainly red, green, and blue (RGB). When these lights overlap, they form new colours. For example, red and green make yellow, and combining all three gives white light. This method is used in digital screens and displays.
+
+Subtractive colour mixing works with pigments, inks, or filters that absorb some wavelengths of light and reflect others, usually using cyan, magenta, and yellow (CMY). When these pigments mix, more light is absorbed, creating darker colours, and mixing all three can make black. This process involves more complex chemistry because it depends on how materials absorb and reflect light at the molecular level.
+
+In this project, we will focus only on additive (light-based) colour mixing and will not discuss subtractive, substance-based mixing.</p>
+            </div>
+          </div>
+  </section>
+        
+          {/* Physical Models of Color section */}
+          <section id="physical-models" className="credits-section" aria-labelledby="physical-heading">
+            <h2 id="physical-heading" className="credits-title garamond">PHYSICAL MODELS OF COLOR</h2>
+            <div className="physical-spectrum-full">
+              <h3 className="credits-title" style={{fontSize: '1.15rem', marginTop: '1.5rem'}}>The Visible Spectrum</h3>
+              <p className="intro-text">We can decompose sunlight using a glass prism. This process reveals the individual colour of each wavelength, which are the colors of the rainbow: red, yellow, green, cyan, and blue-violet. This visible spectrum is our first color space; it is a 1-dimensional space that contains all "pure" colors, with each corresponding to a single wavelength. In reality, other waves like infrared and ultraviolet exist on either side of this spectrum, but our eyes cannot detect them.</p>
+               <VisibleSpectrumCanvas width={700} height={300} />
+            </div>
+          </section>
 
   <section id="references" data-topic="References" className="credits-section" aria-labelledby="references-heading">
         <h2 id="references-heading" className="credits-title garamond">REFERENCES</h2>
