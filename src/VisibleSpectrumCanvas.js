@@ -35,20 +35,34 @@ export default function VisibleSpectrumCanvas({ width = 700, height = 320 }) {
       const visStart = Math.floor(width * 0.18); // left 18% = UV
       const visEnd = Math.floor(width * 0.82);   // right 18% = IR
 
-      // Draw sine wave with varying wavelength
-      const minWavelength = 40; // short
-      const maxWavelength = 160; // long
-      for (let x = 0; x < width; x++) {
-        // Wavelength varies left (short) to right (long)
+      // Draw sine wave with more cycles, still increasing wavelength left to right
+      const minWavelength = 18; // more cycles (shorter wavelength)
+      const maxWavelength = 80; // longer wavelength
+      // Draw sine wave with more cycles, still increasing wavelength left to right
+      // UV: draw semi-transparent line for smoothness
+      ctx.save();
+      ctx.strokeStyle = 'rgba(180,180,180,0.55)';
+      ctx.lineWidth = 1.1;
+      ctx.beginPath();
+      let started = false;
+      for (let x = 0; x < visStart; x++) {
         const localWavelength = minWavelength + (maxWavelength - minWavelength) * (x / width);
         const y = waveY + Math.sin((x / localWavelength) * 2 * Math.PI + phase) * waveHeight;
-        if (x < visStart) {
-          // Ultraviolet: dotted gray
-          if (x % 6 < 3) {
-            ctx.fillStyle = '#bbb';
-            ctx.fillRect(x, y, 1, 2);
-          }
-        } else if (x > visEnd) {
+        if (!started) {
+          ctx.moveTo(x, y);
+          started = true;
+        } else {
+          ctx.lineTo(x, y);
+        }
+      }
+      ctx.stroke();
+      ctx.restore();
+
+      // Visible and IR: draw as before
+      for (let x = visStart; x < width; x++) {
+        const localWavelength = minWavelength + (maxWavelength - minWavelength) * (x / width);
+        const y = waveY + Math.sin((x / localWavelength) * 2 * Math.PI + phase) * waveHeight;
+        if (x > visEnd) {
           // Infrared: dotted gray
           if (x % 6 < 3) {
             ctx.fillStyle = '#bbb';
@@ -95,9 +109,9 @@ export default function VisibleSpectrumCanvas({ width = 700, height = 320 }) {
       }
 
       // Draw thin vertical lines at the ends of the visible spectrum and wave
-      ctx.save();
-      ctx.strokeStyle = 'rgba(0,0,0,0.22)';
-      ctx.lineWidth = 2;
+  ctx.save();
+  ctx.strokeStyle = '#000';
+  ctx.lineWidth = 0.7;
       // Visible spectrum bar ticks
       [visStart, visEnd].forEach(tx => {
         ctx.beginPath();
@@ -122,7 +136,7 @@ export default function VisibleSpectrumCanvas({ width = 700, height = 320 }) {
   ctx.stroke();
 
   // Draw labels
-  ctx.font = 'bold 1.05rem Arial';
+  ctx.font = '1.05rem "NewYork Web", "NewYork Local", Georgia, "Times New Roman", serif';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'top';
   ctx.fillStyle = '#222';

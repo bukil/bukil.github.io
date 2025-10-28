@@ -69,6 +69,21 @@ In this project, we will focus only on additive (light-based) colour mixing and 
               <h3 className="credits-title" style={{fontSize: '1.15rem', marginTop: '1.5rem'}}>The Visible Spectrum</h3>
               <p className="intro-text">We can decompose sunlight using a glass prism. This process reveals the individual colour of each wavelength, which are the colors of the rainbow: red, yellow, green, cyan, and blue-violet. This visible spectrum is our first color space; it is a 1-dimensional space that contains all "pure" colors, with each corresponding to a single wavelength. In reality, other waves like infrared and ultraviolet exist on either side of this spectrum, but our eyes cannot detect them.</p>
                <VisibleSpectrumCanvas width={700} height={300} />
+               <figcaption className="global-caption">Electro magnetic spectrum</figcaption>
+               <div className="intro-text" style={{maxWidth: 700, margin: '1.2rem auto 2.2rem auto', fontSize: '14px', textAlign: 'justify', fontWeight: 400, fontFamily: 'NewYork Local, Georgia, Times New Roman, serif'}}>
+                 The Sun is always sending energy to Earth in the form of electromagnetic waves. We can only see a small part of these waves — the part we call visible light. Sunlight looks white, but it is actually made of many different colours that our brain mixes together.<br /><br />
+                 Our eyes have two kinds of cells that react to light — rods and cones. Rods help us see in dim light or at night, while cones let us see colours when it is bright.<br /><br />
+                 There are three types of cone cells, and each one reacts to a different colour of light:<br />
+                 <ul style={{marginTop: '0.5rem', marginBottom: '0.5rem', paddingLeft: '1.2em'}}>
+                   <li>S-cones: Sensitive to short wavelengths, mostly blue light (around 420 nm).</li>
+                   <li>M-cones: Sensitive to medium wavelengths, mostly green light (around 530 nm).</li>
+                   <li>L-cones: Sensitive to long wavelengths, mostly red light (around 560 nm).</li>
+                 </ul>
+                 All three types work together to help us see the full range of colours around us.
+               </div>
+               <div style={{width: '100%', margin: '0 0 2.2rem 0'}}>
+                 <img src={process.env.PUBLIC_URL + '/EYE.png'} alt="Eye diagram" style={{width: '100%', height: 'auto', borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.08)', display: 'block'}} />
+               </div>
             </div>
           </section>
 

@@ -15,7 +15,7 @@
   margin: 2.2rem auto 0.8rem auto;
   border-radius: 8px;
   background: #fff;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  box-shadow: 0 6px 32px rgba(0,0,0,0.12), 0 1.5px 8px rgba(0,0,0,0.08);
 }
   align-items: center;
 }
