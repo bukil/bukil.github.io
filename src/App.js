@@ -144,7 +144,7 @@ In this project, we will focus only on additive (light-based) colour mixing and 
                 
                 <div className="intro-text" style={{width: '100%', maxWidth: '100%', margin: '0 0 2.2rem 0', fontSize: '14px', textAlign: 'justify', fontWeight: 400, fontFamily: 'NewYork Local, Georgia, Times New Roman, serif'}}>
                   <p style={{marginTop: '0.5rem'}}>
-                    The RGB color space is a way of representing colors using three basic components — Red (R), Green (G), and Blue (B). These three colors of light can be mixed in different amounts to create almost every color you see on a digital screen.
+                    The RGB color space is a way of representing colors using three basic components , Red (R), Green (G), and Blue (B). These three colors of light can be mixed in different amounts to create almost every color you see on a digital screen.
                   </p>
                   <p style={{marginTop: '0.25rem'}}>
                     • When all three are at full intensity, you get white light.<br />
@@ -176,20 +176,39 @@ In this project, we will focus only on additive (light-based) colour mixing and 
                   <div className="intro-text" style={{width: '100%', maxWidth: '100%', margin: '0 0 2.2rem 0', fontSize: '14px', textAlign: 'justify', fontWeight: 400, fontFamily: 'NewYork Local, Georgia, Times New Roman, serif'}}>
                     <p style={{marginTop: '0.5rem', fontWeight: 700}}>Why Colors Use the 0–255 Range</p>
                     <p style={{marginTop: '0.25rem'}}>
-                      Each color channel — Red, Green, and Blue — is stored as a number between 0 and 255.
+                      Each color channel  Red, Green, and Blue   is stored as a number between 0 and 255.
                       This comes from how computers store data:
                     </p>
                     <ul style={{marginTop: '0.5rem', marginBottom: '0.5rem', paddingLeft: '1.2em'}}>
                       <li>8 bits (1 byte) can represent 256 possible values (from 0 to 255). So, each color channel uses one byte of memory.</li>
                     </ul>
                     <p style={{marginTop: '0.25rem'}}>This means:</p>
-                    <ul style={{marginTop: '0.25rem', marginBottom: '0.5rem', paddingLeft: '1.2em'}}>
-                      <li>(0, 0, 0) = Black (no light)</li>
-                      <li>(255, 255, 255) = White (full light)</li>
-                      <li>(255, 0, 0) = Red</li>
-                      <li>(0, 255, 0) = Green</li>
-                      <li>(0, 0, 255) = Blue</li>
-                    </ul>
+                    <div style={{marginTop: '0.25rem', textAlign: 'center'}}>
+                      <table style={{margin: '0 auto', fontSize: '13px', borderCollapse: 'collapse', minWidth: 300}}>
+                        <tbody>
+                          <tr>
+                            <td style={{padding: '4px 12px 4px 0', textAlign: 'right', color: '#222'}}>(0, 0, 0)</td>
+                            <td style={{padding: '4px 0 4px 12px', borderLeft: '1px solid #ddd', textAlign: 'left', color: '#222'}}>Black (no light)</td>
+                          </tr>
+                          <tr>
+                            <td style={{padding: '4px 12px 4px 0', textAlign: 'right', color: '#222'}}>(255, 255, 255)</td>
+                            <td style={{padding: '4px 0 4px 12px', borderLeft: '1px solid #ddd', textAlign: 'left', color: '#222'}}>White (full light)</td>
+                          </tr>
+                          <tr>
+                            <td style={{padding: '4px 12px 4px 0', textAlign: 'right', color: '#222'}}>(255, 0, 0)</td>
+                            <td style={{padding: '4px 0 4px 12px', borderLeft: '1px solid #ddd', textAlign: 'left', color: '#222'}}>Red</td>
+                          </tr>
+                          <tr>
+                            <td style={{padding: '4px 12px 4px 0', textAlign: 'right', color: '#222'}}>(0, 255, 0)</td>
+                            <td style={{padding: '4px 0 4px 12px', borderLeft: '1px solid #ddd', textAlign: 'left', color: '#222'}}>Green</td>
+                          </tr>
+                          <tr>
+                            <td style={{padding: '4px 12px 4px 0', textAlign: 'right', color: '#222'}}>(0, 0, 255)</td>
+                            <td style={{padding: '4px 0 4px 12px', borderLeft: '1px solid #ddd', textAlign: 'left', color: '#222'}}>Blue</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
                     <p style={{marginTop: '0.25rem'}}>By changing these numbers, your screen creates millions of color combinations.</p>
                   </div>
                 </div>
