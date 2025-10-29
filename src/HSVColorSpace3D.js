@@ -40,6 +40,12 @@ function hsvToRgb(h, s, v) {
       g = p;
       b = q;
       break;
+    default:
+      // fallback to black if something unexpected happens
+      r = 0;
+      g = 0;
+      b = 0;
+      break;
   }
   return [r, g, b];
 }
@@ -242,9 +248,7 @@ export default function HSVColorSpace3D({ hueDeg = 0, ballHeight = 1, radiusPct 
         return g;
       }
       dir.normalize();
-      const period = dashSize + gapSize;
-      const count = Math.floor(length / period);
-      const segments = Math.max(1, count);
+        const period = dashSize + gapSize;
       // estimate vertices: each segment yields one dashed segment (2 points)
       const positions = [];
       let cursor = 0;
@@ -491,8 +495,8 @@ export default function HSVColorSpace3D({ hueDeg = 0, ballHeight = 1, radiusPct 
       // radial strip removed — no update necessary
       renderer.render(scene, camera);
       rafId = requestAnimationFrame(animate);
-    };
-    animate();
+  };
+  animate();
 
     // Resize
     const handleResize = () => {
@@ -505,6 +509,7 @@ export default function HSVColorSpace3D({ hueDeg = 0, ballHeight = 1, radiusPct 
     };
     window.addEventListener('resize', handleResize);
     setTimeout(handleResize, 0);
+    
 
     return () => {
       cancelAnimationFrame(rafId);
@@ -537,7 +542,7 @@ export default function HSVColorSpace3D({ hueDeg = 0, ballHeight = 1, radiusPct 
         }
       } catch (e) {}
     };
-  }, []);
+  }, [markerType]);
 
   // component now renders only the canvas; controls should be placed in the parent
   return <div ref={mountRef} style={{ width: '100%', height: '100%' }} />;
