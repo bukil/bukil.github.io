@@ -7,6 +7,7 @@ import ProjectorScene from './ProjectorScene';
 import ScrollRail from './ScrollRail';
 import ColorPalette from './ColorPalette';
 import RGBColorSpace3D from './RGBColorSpace3D';
+import HSVColorSpace3D from './HSVColorSpace3D';
 
 function App() {
   return (
@@ -109,6 +110,22 @@ In this project, we will focus only on additive (light-based) colour mixing and 
                   <img src={process.env.PUBLIC_URL + '/colorpicker.png'} alt="Color Picker 1" style={{width: '220px', height: '220px', objectFit: 'contain', borderRadius: '12px'}} />
                   <img src={process.env.PUBLIC_URL + '/colorpicker2.png'} alt="Color Picker 2" style={{width: '220px', height: '220px', objectFit: 'contain', borderRadius: '12px'}} />
                   <img src={process.env.PUBLIC_URL + '/colorpicker3.png'} alt="Color Picker 3" style={{width: '220px', height: '220px', objectFit: 'contain', borderRadius: '12px'}} />
+                </div>
+                <h3 className="credits-title" style={{fontSize: '1.15rem', marginTop: '1.5rem', fontFamily: 'NewYork Web, Georgia, Times New Roman, serif'}}>HSV Color Space</h3>
+                <div style={{width: '100%', display: 'grid', gridTemplateColumns: '400px 1fr', gap: '2.2rem', alignItems: 'start', margin: '2.2rem 0'}}>
+                  <div style={{width: '400px', height: '400px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                    <HSVColorSpace3D />
+                  </div>
+                  <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'flex-start'}}>
+                    <div className="intro-text" style={{fontSize: '15px', color: '#222', fontFamily: 'NewYork Local, Georgia, Times New Roman, serif', lineHeight: 1.7, marginBottom: '1.2rem'}}>
+                      The HSV color space is represented as a cylinder, where colors are organized by Hue (angle around the cylinder), Saturation (distance from the center), and Value (height). This model is intuitive for artists and designers, as it separates color intensity from color type. The top of the cylinder is bright, the bottom is dark, and the center is gray.
+                    </div>
+                    <ul style={{fontSize: '14px', color: '#444', marginLeft: '1.2em'}}>
+                      <li><b>Hue:</b> The type of color, represented by the angle around the cylinder.</li>
+                      <li><b>Saturation:</b> The intensity or purity of the color, represented by the radius.</li>
+                      <li><b>Value:</b> The brightness, represented by the height.</li>
+                    </ul>
+                  </div>
                 </div>
                 <figcaption className="global-caption" style={{textAlign: 'center', fontSize: '1rem', marginTop: '0.8rem', color: '#444'}}>Color space in daily interaction</figcaption>
 
