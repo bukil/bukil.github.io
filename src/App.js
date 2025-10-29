@@ -1,5 +1,6 @@
 
 import './App.css';
+import { useState } from 'react';
 import Footer from './Footer';
 import VisibleSpectrumCanvas from './VisibleSpectrumCanvas';
 import ConeRodResponseCanvas from './ConeRodResponseCanvas';
@@ -10,6 +11,9 @@ import RGBColorSpace3D from './RGBColorSpace3D';
 import HSVColorSpace3D from './HSVColorSpace3D';
 
 function App() {
+  const [hueDeg, setHueDeg] = useState(0);
+  const [ballHeight, setBallHeight] = useState(1);
+  const [radiusPct, setRadiusPct] = useState(100);
   return (
     <div className="App">
   <h3 id="hero" data-topic="XXXXXXXXX of color" className="hero-title playfair">Space of color</h3>
@@ -114,7 +118,7 @@ In this project, we will focus only on additive (light-based) colour mixing and 
                 <h3 className="credits-title" style={{fontSize: '1.15rem', marginTop: '1.5rem', fontFamily: 'NewYork Web, Georgia, Times New Roman, serif'}}>HSV Color Space</h3>
                 <div style={{width: '100%', display: 'grid', gridTemplateColumns: '400px 1fr', gap: '2.2rem', alignItems: 'start', margin: '2.2rem 0'}}>
                   <div style={{width: '400px', height: '400px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                    <HSVColorSpace3D />
+                    <HSVColorSpace3D hueDeg={hueDeg} ballHeight={ballHeight} radiusPct={radiusPct} />
                   </div>
                   <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'flex-start'}}>
                     <div className="intro-text" style={{fontSize: '15px', color: '#222', fontFamily: 'NewYork Local, Georgia, Times New Roman, serif', lineHeight: 1.7, marginBottom: '1.2rem'}}>
@@ -125,6 +129,24 @@ In this project, we will focus only on additive (light-based) colour mixing and 
                       <li><b>Saturation:</b> The intensity or purity of the color, represented by the radius.</li>
                       <li><b>Value:</b> The brightness, represented by the height.</li>
                     </ul>
+                    {/* Controls: placed to the right of the canvas */}
+                    <div style={{marginTop: '1.2rem', display: 'flex', flexDirection: 'column', gap: '0.8rem', alignItems: 'flex-start'}}>
+                      <div style={{display: 'flex', alignItems: 'center', gap: '0.6rem'}}>
+                        <label style={{width: 56, textAlign: 'right'}}>Hue</label>
+                        <input type="range" min={0} max={360} value={hueDeg} onChange={e => setHueDeg(Number(e.target.value))} style={{width: 220}} />
+                        <div style={{width: 48}}>{Math.round(hueDeg)}°</div>
+                      </div>
+                      <div style={{display: 'flex', alignItems: 'center', gap: '0.6rem'}}>
+                        <label style={{width: 56, textAlign: 'right'}}>Height</label>
+                        <input type="range" min={0} max={100} value={Math.round(ballHeight * 100)} onChange={e => setBallHeight(Number(e.target.value) / 100)} style={{width: 220}} />
+                        <div style={{width: 48}}>{Math.round(ballHeight * 100)}%</div>
+                      </div>
+                      <div style={{display: 'flex', alignItems: 'center', gap: '0.6rem'}}>
+                        <label style={{width: 56, textAlign: 'right'}}>Radius</label>
+                        <input type="range" min={0} max={100} value={Math.round(radiusPct)} onChange={e => setRadiusPct(Number(e.target.value))} style={{width: 220}} />
+                        <div style={{width: 48}}>{Math.round(radiusPct)}%</div>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <figcaption className="global-caption" style={{textAlign: 'center', fontSize: '1rem', marginTop: '0.8rem', color: '#444'}}>Color space in daily interaction</figcaption>
