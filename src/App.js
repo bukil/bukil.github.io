@@ -14,6 +14,10 @@ function App() {
   const [hueDeg, setHueDeg] = useState(0);
   const [ballHeight, setBallHeight] = useState(1);
   const [radiusPct, setRadiusPct] = useState(100);
+  // independent controls for the duplicated second HSV canvas
+  const [hueDeg2, setHueDeg2] = useState(0);
+  const [ballHeight2, setBallHeight2] = useState(1);
+  const [radiusPct2, setRadiusPct2] = useState(100);
   return (
     <div className="App">
   <h3 id="hero" data-topic="XXXXXXXXX of color" className="hero-title playfair">Space of color</h3>
@@ -134,18 +138,34 @@ In this project, we will focus only on additive (light-based) colour mixing and 
                       <div style={{display: 'flex', alignItems: 'center', gap: '0.6rem'}}>
                         <label style={{width: 56, textAlign: 'right'}}>Hue</label>
                         <input type="range" min={0} max={360} value={hueDeg} onChange={e => setHueDeg(Number(e.target.value))} style={{width: 220}} />
-                        <div style={{width: 48}}>{Math.round(hueDeg)}°</div>
+                        <div style={{width: 60}}>{Math.round(hueDeg)}°</div>
                       </div>
                       <div style={{display: 'flex', alignItems: 'center', gap: '0.6rem'}}>
-                        <label style={{width: 56, textAlign: 'right'}}>Height</label>
+                        <label style={{width: 56, textAlign: 'right'}}>Value</label>
                         <input type="range" min={0} max={100} value={Math.round(ballHeight * 100)} onChange={e => setBallHeight(Number(e.target.value) / 100)} style={{width: 220}} />
                         <div style={{width: 48}}>{Math.round(ballHeight * 100)}%</div>
                       </div>
                       <div style={{display: 'flex', alignItems: 'center', gap: '0.6rem'}}>
-                        <label style={{width: 56, textAlign: 'right'}}>Radius</label>
+                        <label style={{width: 56, textAlign: 'right'}}>Saturation</label>
                         <input type="range" min={0} max={100} value={Math.round(radiusPct)} onChange={e => setRadiusPct(Number(e.target.value))} style={{width: 220}} />
                         <div style={{width: 48}}>{Math.round(radiusPct)}%</div>
                       </div>
+                    </div>
+                  </div>
+                </div>
+                {/* Duplicate of the above interactive HSV block (canvas only - text removed) */}
+                <div style={{width: '100%', display: 'grid', gridTemplateColumns: '400px 1fr', gap: '2.2rem', alignItems: 'start', margin: '2.2rem 0'}}>
+                  <div style={{width: '400px', height: '400px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                    <HSVColorSpace3D hueDeg={hueDeg2} ballHeight={ballHeight2} radiusPct={radiusPct2} markerType="plane" />
+                  </div>
+                  <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'flex-start'}}>
+                    <div style={{marginTop: '1.2rem', display: 'flex', flexDirection: 'column', gap: '0.8rem', alignItems: 'flex-start'}}>
+                      <div style={{display: 'flex', alignItems: 'center', gap: '0.6rem'}}>
+                        <label style={{width: 56, textAlign: 'right'}}>Hue</label>
+                        <input type="range" min={0} max={360} value={hueDeg2} onChange={e => setHueDeg2(Number(e.target.value))} style={{width: 220}} />
+                        <div style={{width: 48}}>{Math.round(hueDeg2)}°</div>
+                      </div>
+                      {/* Height and Radius controls removed for the second (plane) HSV preview */}
                     </div>
                   </div>
                 </div>
