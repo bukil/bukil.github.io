@@ -134,10 +134,7 @@ In this project, we will focus only on additive (light-based) colour mixing and 
                       <li><b>Green axis :</b> Controls the intensity of green.</li>
                       <li><b>Blue axis :</b> Controls the intensity of blue.</li>
                     </ul>
-                    {/* small sample text inserted immediately after the RGB segment */}
-                    <div className="intro-text" style={{fontSize: '13px', color: '#666', marginTop: '0.8rem'}}>
-                      Sample: these RGB axes control each channel's intensity on a 0–255 scale; use the sliders or numeric inputs to experiment.
-                    </div>
+                    {/* small sample text removed as requested */}
                   </div>
                 </div>
                 {/* RGB Color Space block inserted above the HSV section */}
@@ -149,7 +146,7 @@ In this project, we will focus only on additive (light-based) colour mixing and 
                   <p style={{marginTop: '0.25rem'}}>
                     • When all three are at full intensity, you get white light.<br />
                     • When all three are off, you get black.<br />
-                    • Mixing two of them gives new colors — for example:
+                    • Mixing two of them gives new colors , for example:
                   </p>
                   <div style={{marginTop: '0.5rem', textAlign: 'center'}}>
                     <table style={{margin: '0 auto', fontSize: '13px', borderCollapse: 'collapse', minWidth: 220}}>
@@ -179,9 +176,10 @@ In this project, we will focus only on additive (light-based) colour mixing and 
                       Each color channel  Red, Green, and Blue   is stored as a number between 0 and 255.
                       This comes from how computers store data:
                     </p>
-                    <ul style={{marginTop: '0.5rem', marginBottom: '0.5rem', paddingLeft: '1.2em'}}>
-                      <li>8 bits (1 byte) can represent 256 possible values (from 0 to 255). So, each color channel uses one byte of memory.</li>
-                    </ul>
+                  
+                      <p style={{marginTop: '0.25rem'}}>8 bits (1 byte) can represent 256 possible values (from 0 to 255). So, each color channel uses one byte of memory.</p>
+                    
+                    
                     <p style={{marginTop: '0.25rem'}}>This means:</p>
                     <div style={{marginTop: '0.25rem', textAlign: 'center'}}>
                       <table style={{margin: '0 auto', fontSize: '13px', borderCollapse: 'collapse', minWidth: 300}}>
@@ -228,7 +226,7 @@ In this project, we will focus only on additive (light-based) colour mixing and 
                     </ul>
                     {/* Controls: placed to the right of the canvas */}
                     <div style={{marginTop: '1.2rem', display: 'flex', flexDirection: 'column', gap: '0.8rem', alignItems: 'flex-start'}}>
-                      <div style={{display: 'flex', alignItems: 'center', gap: '0.6rem'}}>
+                      <div style={{display: 'flex', alignItems: 'center', gap: '0.6rem', marginTop: '1.2rem'}}>
                         <label style={{width: 56, textAlign: 'right'}}>Hue</label>
                         <input type="range" min={0} max={360} value={hueDeg} onChange={e => setHueDeg(Number(e.target.value))} style={{width: 220}} />
                         <div style={{width: 60}}>{Math.round(hueDeg)}°</div>
@@ -253,7 +251,7 @@ In this project, we will focus only on additive (light-based) colour mixing and 
                   </div>
                   <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'flex-start'}}>
                     <div style={{marginTop: '1.2rem', display: 'flex', flexDirection: 'column', gap: '0.8rem', alignItems: 'flex-start'}}>
-                      <div style={{display: 'flex', alignItems: 'center', gap: '0.6rem'}}>
+                      <div style={{display: 'flex', alignItems: 'center', gap: '0.6rem', marginTop: '2.5rem'}}>
                         <label style={{width: 56, textAlign: 'right'}}>Hue</label>
                         <input type="range" min={0} max={360} value={hueDeg2} onChange={e => setHueDeg2(Number(e.target.value))} style={{width: 220}} />
                         <div style={{width: 48}}>{Math.round(hueDeg2)}°</div>

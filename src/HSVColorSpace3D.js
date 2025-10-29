@@ -98,8 +98,9 @@ export default function HSVColorSpace3D({ hueDeg = 0, ballHeight = 1, radiusPct 
       svCanvas.width = svW;
       svCanvas.height = svH;
       svCanvas.style.position = 'absolute';
-  // move the preview further down so it sits below any headings and aligned with controls
-  svCanvas.style.top = '150px';
+    // move the preview further down so it sits below any headings and aligned with controls
+    // increased from 150px to 220px to lower the canvas further down the page
+    svCanvas.style.top = '140px';
       svCanvas.style.left = '8px';
       svCanvas.style.width = svW + 'px';
       svCanvas.style.height = svH + 'px';
@@ -219,15 +220,15 @@ export default function HSVColorSpace3D({ hueDeg = 0, ballHeight = 1, radiusPct 
       const planeColorAttr = new THREE.BufferAttribute(planeColorArr, 3);
       planeGeom.setAttribute('color', planeColorAttr);
       // use vertex colors so the plane acts as a 2D color-picker (h chosen by hue slider)
-      const planeMat = new THREE.MeshBasicMaterial({ vertexColors: true, side: THREE.DoubleSide, transparent: true, opacity: 1.0 });
+  // make the plane semi-transparent and participate in the depth buffer
+  // so it doesn't forcibly draw over other geometry (simpler, non-obstructing)
+  const planeMat = new THREE.MeshBasicMaterial({ vertexColors: true, side: THREE.DoubleSide, transparent: true, opacity: 0.65, depthTest: true, depthWrite: false });
       planeMesh = new THREE.Mesh(planeGeom, planeMat);
       // anchor the plane's inner edge at the cylinder center (mesh local origin now at inner edge)
       planeMesh.position.set(0, 0, 0);
       // initial rotation aligns with the marker angle
       planeMesh.rotation.y = dotAngle;
-      planeMesh.renderOrder = 1000; // draw on top
-      // render above the semi-transparent cylinder
-      planeMesh.material.depthTest = false;
+  // do not force render on top; let depth buffering decide ordering
       scene.add(planeMesh);
     }
 
@@ -340,7 +341,8 @@ export default function HSVColorSpace3D({ hueDeg = 0, ballHeight = 1, radiusPct 
       topCapColor.setXYZ(i, r, g, b);
     }
     topCapGeom.setAttribute('color', topCapColor);
-    const topCapMat = new THREE.MeshBasicMaterial({ vertexColors: true, opacity: 1.0, transparent: false, side: THREE.DoubleSide });
+  // make the top cap semi-transparent so interior visuals remain visible
+  const topCapMat = new THREE.MeshBasicMaterial({ vertexColors: true, opacity: 0.6, transparent: true, side: THREE.DoubleSide, depthWrite: false });
     const topCap = new THREE.Mesh(topCapGeom, topCapMat);
     topCap.position.y = heightCyl / 2;
     topCap.rotation.x = -Math.PI / 2;
@@ -406,8 +408,7 @@ export default function HSVColorSpace3D({ hueDeg = 0, ballHeight = 1, radiusPct 
         const angle = Math.atan2(vz, vx); // equals h * 2pi
         planeMesh.rotation.y = angle;
         // ensure plane renders above semi-transparent cylinder
-        planeMesh.renderOrder = 1000;
-        planeMesh.material.depthTest = false;
+  // keep default render order and depth test so the plane doesn't always occlude other objects
         // update per-vertex colors on the plane to reflect current hue
         const pg = planeMesh.geometry;
         if (pg && pg.attributes && pg.attributes.position && pg.attributes.color) {
