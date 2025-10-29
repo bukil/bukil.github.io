@@ -33,22 +33,23 @@ export default function RGBColorSpace3D() {
     scene.add(new THREE.AxesHelper(1.5));
 
 
-    // Create RGB cube with accurate vertex colors
-    const geometry = new THREE.BoxGeometry(2, 2, 2);
+  // Create RGB cube with accurate vertex colors (slightly larger)
+  const geometry = new THREE.BoxGeometry(2.4, 2.4, 2.4);
     const material = new THREE.MeshBasicMaterial({ vertexColors: true, opacity: 0.85, transparent: true });
     const cube = new THREE.Mesh(geometry, material);
 
-    // Assign accurate RGB colors to each vertex
+    // Assign accurate RGB colors to each vertex for new cube size
     const position = geometry.attributes.position;
     const colorAttr = new THREE.BufferAttribute(new Float32Array(position.count * 3), 3);
+    // For a cube of size 2.4, vertices range from -1.2 to 1.2
     for (let i = 0; i < position.count; i++) {
       const x = position.getX(i);
       const y = position.getY(i);
       const z = position.getZ(i);
-      // Map -1/1 to 0/1 for RGB
-      const r = (x + 1) / 2;
-      const g = (y + 1) / 2;
-      const b = (z + 1) / 2;
+      // Map -1.2/1.2 to 0/1 for RGB
+      const r = (x + 1.2) / 2.4;
+      const g = (y + 1.2) / 2.4;
+      const b = (z + 1.2) / 2.4;
       colorAttr.setXYZ(i, r, g, b);
     }
     geometry.setAttribute('color', colorAttr);
