@@ -1,5 +1,3 @@
-import ThreeDCanvas from './ThreeDCanvas';
-import Blank3DCanvas from './Blank3DCanvas';
 
 import './App.css';
 import Footer from './Footer';
@@ -105,10 +103,6 @@ In this project, we will focus only on additive (light-based) colour mixing and 
                    A color space is a specific system used to represent and organize colors in a consistent way, so that different devices, like cameras, monitors, and printers can capture, display, and reproduce the same colors accurately.<br /><br />
                    For instance, the RGB color space is used in digital screens, where colors are created by combining red, green, and blue light. On the other hand, printers use the CMYK color space, which mixes cyan, magenta, yellow, and black inks to produce a similar range of colors on paper.
                  </div>
-                {/* Blank3DCanvas removed as requested */}
-                <div style={{width: '100%', minHeight: '340px', background: '#f8f8fa', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '2.2rem'}}>
-                  <ThreeDCanvas width={800} height={340} />
-                </div>
                </div>
             </div>
           </section>

@@ -1,0 +1,11 @@
+Model Information:
+* title:	CIELAB Color space
+* source:	https://sketchfab.com/3d-models/cielab-color-space-7e71c9b9e8444151b7d800921ab70d69
+* author:	Luis Aros Illanes (https://sketchfab.com/Luis.Aros.Illanes)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "CIELAB Color space" (https://sketchfab.com/3d-models/cielab-color-space-7e71c9b9e8444151b7d800921ab70d69) by Luis Aros Illanes (https://sketchfab.com/Luis.Aros.Illanes) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

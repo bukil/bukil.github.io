@@ -25,6 +25,7 @@ export default function VisibleSpectrumCanvas({ width = 700, height = 320 }) {
   const waveHeight = 36;
   const waveY = Math.floor(height / 2) - Math.floor(waveHeight / 2); // center wave vertically
   const labelY = waveY + waveHeight + 44;
+  const wavelength = 100; // mostly constant
   const t0 = performance.now();
 
     function drawWave(t) {
