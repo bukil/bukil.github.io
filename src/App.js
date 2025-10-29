@@ -2,6 +2,7 @@
 import './App.css';
 import Footer from './Footer';
 import VisibleSpectrumCanvas from './VisibleSpectrumCanvas';
+import ConeRodResponseCanvas from './ConeRodResponseCanvas';
 import ProjectorScene from './ProjectorScene';
 import ScrollRail from './ScrollRail';
 import ColorPalette from './ColorPalette';
@@ -81,8 +82,27 @@ In this project, we will focus only on additive (light-based) colour mixing and 
                  </ul>
                  All three types work together to help us see the full range of colours around us.
                </div>
-               <div style={{width: '100%', margin: '0 0 2.2rem 0'}}>
+               <div style={{width: '100%', margin: '0 0 0.5rem 0'}}>
                  <img src={process.env.PUBLIC_URL + '/EYE.png'} alt="Eye diagram" style={{width: '100%', height: 'auto', borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.08)', display: 'block'}} />
+                 <figcaption className="global-caption">Rod and Cone cells in the eye</figcaption>
+                 <div className="intro-text" style={{maxWidth: 700, margin: '1.2rem auto 2.2rem auto', fontSize: '14px', textAlign: 'justify', fontWeight: 400, fontFamily: 'NewYork Local, Georgia, Times New Roman, serif'}}>
+                   The cones are located deeper within the retina, meaning they need more energy to be activated. Each type of cone also responds differently to various wavelengths of light.
+                 </div>
+                 <div style={{width: '100%', margin: '0 0 0.5rem 0'}}>
+                   {/* Relative response vs wavelength plot */}
+                   <ConeRodResponseCanvas width={700} height={260} />
+                   <figcaption className="global-caption">Relative response of cones and rods vs wavelength</figcaption>
+                 </div>
+                 <div className="intro-text" style={{maxWidth: 700, margin: '1.2rem auto 2.2rem auto', fontSize: '14px', textAlign: 'justify', fontWeight: 400, fontFamily: 'NewYork Local, Georgia, Times New Roman, serif'}}>
+                   When light hits these cones, it starts a chain of chemical reactions that send signals to the brain, which then interprets them as color. When the wavelengths overlap, two types of cones are activated at once, and we see a mixed color, like purple.<br /><br />
+                   However, our eyes don’t respond equally to all wavelengths. They are most sensitive to green light, somewhat less to red, and least to blue.<br /><br />
+                   This means that light with the same energy can appear to have different brightness depending on its wavelength. For instance, green light at 555 nm looks brighter than blue light at 450 nm, even if both have equal energy.
+                 </div>
+                 <h2 className="credits-title garamond" style={{textAlign: 'left', fontSize: '1.35rem', margin: '2.2rem 0 0.8rem 0'}}>COLOR SPACE</h2>
+                 <div className="intro-text" style={{width: '100%', maxWidth: '100%', margin: '0 0 2.2rem 0', fontSize: '14px', textAlign: 'justify', fontWeight: 400, fontFamily: 'NewYork Local, Georgia, Times New Roman, serif'}}>
+                   A color space is a specific system used to represent and organize colors in a consistent way, so that different devices, like cameras, monitors, and printers can capture, display, and reproduce the same colors accurately.<br /><br />
+                   For instance, the RGB color space is used in digital screens, where colors are created by combining red, green, and blue light. On the other hand, printers use the CMYK color space, which mixes cyan, magenta, yellow, and black inks to produce a similar range of colors on paper.
+                 </div>
                </div>
             </div>
           </section>
