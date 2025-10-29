@@ -29,7 +29,8 @@ export default function VisibleSpectrumCanvas({ width = 700, height = 320 }) {
 
     function drawWave(t) {
       ctx.clearRect(0, 0, width, height);
-      const phase = t * 0.001;
+  // speed up the wave: increase phase multiplier (was 0.001)
+  const phase = t * 0.008;
       // Define visible spectrum region
       const visStart = Math.floor(width * 0.18); // left 18% = UV
       const visEnd = Math.floor(width * 0.82);   // right 18% = IR

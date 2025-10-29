@@ -77,7 +77,7 @@ In this project, we will focus only on additive (light-based) colour mixing and 
           <section id="physical-models" className="credits-section" aria-labelledby="physical-heading">
             <h2 id="physical-heading" className="credits-title garamond">PHYSICAL MODELS OF COLOR</h2>
             <div className="physical-spectrum-full">
-              <h3 className="credits-title" style={{fontSize: '1.15rem', marginTop: '1.5rem'}}>The Visible Spectrum</h3>
+              <h3 className="credits-title" style={{fontSize: '1.15rem', marginTop: '1.5rem', textAlign: 'left'}}>The Visible Spectrum</h3>
               <p className="intro-text">We can decompose sunlight using a glass prism. This process reveals the individual colour of each wavelength, which are the colors of the rainbow: red, yellow, green, cyan, and blue-violet. This visible spectrum is our first color space; it is a 1-dimensional space that contains all "pure" colors, with each corresponding to a single wavelength. In reality, other waves like infrared and ultraviolet exist on either side of this spectrum, but our eyes cannot detect them.</p>
                <VisibleSpectrumCanvas width={700} height={300} />
                <figcaption className="global-caption">Electro magnetic spectrum</figcaption>
@@ -134,6 +134,63 @@ In this project, we will focus only on additive (light-based) colour mixing and 
                       <li><b>Green axis :</b> Controls the intensity of green.</li>
                       <li><b>Blue axis :</b> Controls the intensity of blue.</li>
                     </ul>
+                    {/* small sample text inserted immediately after the RGB segment */}
+                    <div className="intro-text" style={{fontSize: '13px', color: '#666', marginTop: '0.8rem'}}>
+                      Sample: these RGB axes control each channel's intensity on a 0–255 scale; use the sliders or numeric inputs to experiment.
+                    </div>
+                  </div>
+                </div>
+                {/* RGB Color Space block inserted above the HSV section */}
+                
+                <div className="intro-text" style={{width: '100%', maxWidth: '100%', margin: '0 0 2.2rem 0', fontSize: '14px', textAlign: 'justify', fontWeight: 400, fontFamily: 'NewYork Local, Georgia, Times New Roman, serif'}}>
+                  <p style={{marginTop: '0.5rem'}}>
+                    The RGB color space is a way of representing colors using three basic components — Red (R), Green (G), and Blue (B). These three colors of light can be mixed in different amounts to create almost every color you see on a digital screen.
+                  </p>
+                  <p style={{marginTop: '0.25rem'}}>
+                    • When all three are at full intensity, you get white light.<br />
+                    • When all three are off, you get black.<br />
+                    • Mixing two of them gives new colors — for example:
+                  </p>
+                  <div style={{marginTop: '0.5rem', textAlign: 'center'}}>
+                    <table style={{margin: '0 auto', fontSize: '13px', borderCollapse: 'collapse', minWidth: 220}}>
+                      <tbody>
+                        <tr>
+                          <td style={{padding: '4px 12px 4px 0', textAlign: 'right', color: '#222'}}>Red + Green</td>
+                          <td style={{padding: '4px 0 4px 12px', borderLeft: '1px solid #ddd', textAlign: 'left', color: '#222'}}>Yellow</td>
+                        </tr>
+                        <tr>
+                          <td style={{padding: '4px 12px 4px 0', textAlign: 'right', color: '#222'}}>Red + Blue</td>
+                          <td style={{padding: '4px 0 4px 12px', borderLeft: '1px solid #ddd', textAlign: 'left', color: '#222'}}>Magenta</td>
+                        </tr>
+                        <tr>
+                          <td style={{padding: '4px 12px 4px 0', textAlign: 'right', color: '#222'}}>Green + Blue</td>
+                          <td style={{padding: '4px 0 4px 12px', borderLeft: '1px solid #ddd', textAlign: 'left', color: '#222'}}>Cyan</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <p style={{marginTop: '0.5rem'}}>
+                    This system is called additive color mixing, because the more light you add, the brighter the color becomes. It’s used in computer monitors, TVs, phone screens, and cameras, where light is emitted directly from the screen.
+                  </p>
+
+                  <div className="intro-text" style={{width: '100%', maxWidth: '100%', margin: '0 0 2.2rem 0', fontSize: '14px', textAlign: 'justify', fontWeight: 400, fontFamily: 'NewYork Local, Georgia, Times New Roman, serif'}}>
+                    <p style={{marginTop: '0.5rem', fontWeight: 700}}>Why Colors Use the 0–255 Range</p>
+                    <p style={{marginTop: '0.25rem'}}>
+                      Each color channel — Red, Green, and Blue — is stored as a number between 0 and 255.
+                      This comes from how computers store data:
+                    </p>
+                    <ul style={{marginTop: '0.5rem', marginBottom: '0.5rem', paddingLeft: '1.2em'}}>
+                      <li>8 bits (1 byte) can represent 256 possible values (from 0 to 255). So, each color channel uses one byte of memory.</li>
+                    </ul>
+                    <p style={{marginTop: '0.25rem'}}>This means:</p>
+                    <ul style={{marginTop: '0.25rem', marginBottom: '0.5rem', paddingLeft: '1.2em'}}>
+                      <li>(0, 0, 0) = Black (no light)</li>
+                      <li>(255, 255, 255) = White (full light)</li>
+                      <li>(255, 0, 0) = Red</li>
+                      <li>(0, 255, 0) = Green</li>
+                      <li>(0, 0, 255) = Blue</li>
+                    </ul>
+                    <p style={{marginTop: '0.25rem'}}>By changing these numbers, your screen creates millions of color combinations.</p>
                   </div>
                 </div>
                 <h3 className="credits-title" style={{fontSize: '1.15rem', marginTop: '1.5rem', fontFamily: 'NewYork Web, Georgia, Times New Roman, serif'}}>HSV Color Space</h3>
@@ -186,7 +243,7 @@ In this project, we will focus only on additive (light-based) colour mixing and 
                     </div>
                   </div>
                 </div>
-                <figcaption className="global-caption" style={{textAlign: 'center', fontSize: '1rem', marginTop: '0.8rem', color: '#444'}}>Color space in daily interaction</figcaption>
+                <figcaption className="global-caption" style={{textAlign: 'center', fontSize: '1rem', marginTop: '0.8rem', color: '#444'}}>HSV Colour space as colour picker</figcaption>
                </div>
             </div>
           </section>
