@@ -16,8 +16,8 @@ function App() {
   const [radiusPct, setRadiusPct] = useState(100);
   // independent controls for the duplicated second HSV canvas
   const [hueDeg2, setHueDeg2] = useState(0);
-  const [ballHeight2, setBallHeight2] = useState(1);
-  const [radiusPct2, setRadiusPct2] = useState(100);
+  const [ballHeight2] = useState(1);
+  const [radiusPct2] = useState(100);
   return (
     <div className="App">
   <h3 id="hero" data-topic="XXXXXXXXX of color" className="hero-title playfair">Space of color</h3>

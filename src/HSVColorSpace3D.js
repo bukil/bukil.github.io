@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
@@ -308,7 +308,6 @@ export default function HSVColorSpace3D({ hueDeg = 0, ballHeight = 1, radiusPct 
     const barColorArr = new Float32Array(barPos.count * 3);
     // initialize with hue = initialHue
     for (let i = 0; i < barPos.count; i++) {
-      const vx = barPos.getX(i);
       const vy = barPos.getY(i);
       // vy ranges -barHeight/2 .. +barHeight/2
       const v = (vy + barHeight / 2) / barHeight; // 0..1
@@ -349,7 +348,6 @@ export default function HSVColorSpace3D({ hueDeg = 0, ballHeight = 1, radiusPct 
     const bottomCapColor = new THREE.BufferAttribute(new Float32Array(bottomCapPos.count * 3), 3);
     for (let i = 0; i < bottomCapPos.count; i++) {
       const x = bottomCapPos.getX(i);
-      const y = bottomCapPos.getY(i);
       const z = bottomCapPos.getZ(i);
       const h = (Math.atan2(z, x) + Math.PI) / (2 * Math.PI);
       const s = Math.sqrt(x * x + z * z) / radius;
