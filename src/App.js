@@ -216,7 +216,7 @@ function App() {
             </div>
             <h3 className="credits-title" style={{ fontSize: '1.15rem', marginTop: '1.5rem', fontFamily: 'NewYork Web, Georgia, Times New Roman, serif' }}>HSV Color Space</h3>
             <div style={{ width: '100%', display: 'grid', gridTemplateColumns: '400px 1fr', gap: '2.2rem', alignItems: 'start', margin: '2.2rem 0' }}>
-              <div style={{ width: '400px', height: '400px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div style={{ width: '400px', height: '400px', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
                 <HSVColorSpace3D hueDeg={hueDeg} ballHeight={ballHeight} radiusPct={radiusPct} />
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}>
@@ -229,7 +229,7 @@ function App() {
                   <li><b>Value:</b> The brightness, represented by the height.</li>
                 </ul>
                 {/* Controls: placed to the right of the canvas */}
-                <div style={{ marginTop: '1.2rem', display: 'flex', flexDirection: 'column', gap: '0.8rem', alignItems: 'flex-start' }}>
+                <div style={{ marginTop: '1rem', display: 'flex', flexDirection: 'column', gap: '0.8rem', alignItems: 'flex-start' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginTop: '1.2rem' }}>
                     <label style={{ width: 56, textAlign: 'right' }}>Hue</label>
                     <input className="hue-range" type="range" min={0} max={360} value={hueDeg} onChange={e => setHueDeg(Number(e.target.value))} style={{ width: 220 }} />
@@ -248,13 +248,20 @@ function App() {
                 </div>
               </div>
             </div>
+            {/* Full-width hue explanation placed below the controls with gap */}
+            <div style={{ width: '100%', marginTop: '1.8rem' }}>
+              <h4 className="credits-title" style={{ fontSize: '1rem', margin: 0, fontFamily: 'NewYork Web, Georgia, Times New Roman, serif', textAlign: 'left' }}>Hue in HSV</h4>
+              <div className="intro-text" style={{ fontSize: '14px', color: '#444', marginTop: '0.5rem', lineHeight: 1.6 }}>
+                Hue describes the base colour and is encoded as an angle around the cylinder (0°–360°). As you move the hue, you rotate around the circle while keeping Value (height/brightness) and Saturation (radius/purity) fixed. Typical anchors are 0° red, 60° yellow, 120° green, 180° cyan, 240° blue, and 300° magenta, wrapping back to red at 360°.
+              </div>
+            </div>
             {/* Duplicate of the above interactive HSV block (canvas only - text removed) */}
             <div style={{ width: '100%', display: 'grid', gridTemplateColumns: '400px 1fr', gap: '2.2rem', alignItems: 'start', margin: '2.2rem 0' }}>
               <div style={{ width: '400px', height: '400px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <HSVColorSpace3D hueDeg={hueDeg2} ballHeight={ballHeight2} radiusPct={radiusPct2} markerType="plane" />
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}>
-                <div style={{ marginTop: '1.2rem', display: 'flex', flexDirection: 'column', gap: '0.8rem', alignItems: 'flex-start' }}>
+                <div style={{ marginTop: '3.6rem', display: 'flex', flexDirection: 'column', gap: '0.8rem', alignItems: 'flex-start' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginTop: '2.5rem' }}>
                     <label style={{ width: 56, textAlign: 'right' }}>Hue</label>
                     <input className="hue-range" type="range" min={0} max={360} value={hueDeg2} onChange={e => setHueDeg2(Number(e.target.value))} style={{ width: 220 }} />
@@ -264,17 +271,26 @@ function App() {
                 </div>
               </div>
             </div>
+            {/* Full-width Value explanation placed above the third block */}
+            <div style={{ width: '100%', marginTop: '1.8rem' }}>
+              <h4 className="credits-title" style={{ fontSize: '1rem', margin: 0, fontFamily: 'NewYork Web, Georgia, Times New Roman, serif', textAlign: 'left' }}>Value in HSV</h4>
+              <div className="intro-text" style={{ fontSize: '14px', color: '#444', marginTop: '0.5rem', lineHeight: 1.6 }}>
+                Value sets how much light the colour carries. In the cylinder it is the vertical axis: bottom is 0% (black), top is 100% (maximum brightness). Raising Value lifts a horizontal slice: the circular preview below the slider shows all Hue–Saturation combinations at that height, fading darker when lowered.
+              </div>
+            </div>
             {/* Duplicate of the above interactive HSV block (3rd copy) */}
             <div style={{ width: '100%', display: 'grid', gridTemplateColumns: '400px 1fr', gap: '2.2rem', alignItems: 'start', margin: '2.2rem 0' }}>
-              <div style={{ width: '400px', height: '400px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <HSVColorSpace3D
-                  hueDeg={hueDeg3}
-                  ballHeight={ballHeight3}
-                  radiusPct={radiusPct3}
-                  markerType="circle"
-                  onHueChange={setHueDeg3}
-                  onRadiusChange={setRadiusPct3}
-                />
+              <div style={{ width: '400px', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', position: 'relative' }}>
+                <div style={{ width: '400px', height: '400px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <HSVColorSpace3D
+                    hueDeg={hueDeg3}
+                    ballHeight={ballHeight3}
+                    radiusPct={radiusPct3}
+                    markerType="circle"
+                    onHueChange={setHueDeg3}
+                    onRadiusChange={setRadiusPct3}
+                  />
+                </div>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}>
                 <div style={{ marginTop: '1.2rem', display: 'flex', flexDirection: 'column', gap: '0.8rem', alignItems: 'flex-start' }}>

@@ -11,41 +11,19 @@ function hsvToRgb(h, s, v) {
   let t = v * (1 - (1 - f) * s);
   switch (i % 6) {
     case 0:
-      r = v;
-      g = t;
-      b = p;
-      break;
+      r = v; g = t; b = p; break;
     case 1:
-      r = q;
-      g = v;
-      b = p;
-      break;
+      r = q; g = v; b = p; break;
     case 2:
-      r = p;
-      g = v;
-      b = t;
-      break;
+      r = p; g = v; b = t; break;
     case 3:
-      r = p;
-      g = q;
-      b = v;
-      break;
+      r = p; g = q; b = v; break;
     case 4:
-      r = t;
-      g = p;
-      b = v;
-      break;
+      r = t; g = p; b = v; break;
     case 5:
-      r = v;
-      g = p;
-      b = q;
-      break;
+      r = v; g = p; b = q; break;
     default:
-      // fallback to black if something unexpected happens
-      r = 0;
-      g = 0;
-      b = 0;
-      break;
+      r = 0; g = 0; b = 0; break;
   }
   return [r, g, b];
 }
@@ -136,24 +114,16 @@ export default function HSVColorSpace3D({ hueDeg = 0, ballHeight = 1, radiusPct 
       svCanvas.style.zIndex = 2000;
       svCanvas.style.pointerEvents = 'none';
 
-      svHost = container.parentElement && container.parentElement.nextElementSibling ? container.parentElement.nextElementSibling : container;
+      // host is the cylinder's own container so we can place the circle to its right
+      svHost = container;
       if (svHost && svHost.style) {
         if (!svHost.style.position || svHost.style.position === 'static') svHost.style.position = 'relative';
-        // prefer a more specific host if available (the wrapper around the Value slider)
-        const customHost = svHost.querySelector && svHost.querySelector('.value-host');
-        if (customHost) {
-          svHost = customHost;
-          // position the preview centered relative to the host element
-          svCanvas.style.left = '50%';
-          svCanvas.style.transform = 'translateX(-50%)';
-          // Place the circle a bit further below the slider
-          svCanvas.style.top = 'calc(100% + 36px)';
-        } else {
-          // fallback absolute position within controls column (moved further down)
-          svCanvas.style.top = '260px';
-          svCanvas.style.left = '20px';
-        }
       }
+      // Position: right side, vertically aligned to approximate Value slider height (near top of block)
+      svCanvas.style.left = '100%';
+      svCanvas.style.top = '0';
+      // Move right by 120px and down by ~40px to sit level with the Value bar
+      svCanvas.style.transform = 'translate(120px, 40px)';
       svHost.appendChild(svCanvas);
       svCtx = svCanvas.getContext('2d');
       svImage = svCtx.createImageData(svW, svH);
