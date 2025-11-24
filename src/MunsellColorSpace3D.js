@@ -103,7 +103,7 @@ export default function MunsellColorSpace3D() {
     const animate = () => {
       rafId = requestAnimationFrame(animate);
       controls.update();
-      if (munsellRoot) munsellRoot.rotation.y += 0.003;
+      // Removed automatic self-rotation per request
       renderer.render(scene, camera);
     };
     animate();

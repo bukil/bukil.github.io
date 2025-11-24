@@ -10,6 +10,7 @@ import MunsellColorSpace3D from './MunsellColorSpace3D';
 import ColorPalette from './ColorPalette';
 import RGBColorSpace3D from './RGBColorSpace3D';
 import HSVColorSpace3D from './HSVColorSpace3D';
+import CIELABColorSpace3D from './CIELABColorSpace3D';
 
 function App() {
   const [hueDeg, setHueDeg] = useState(0);
@@ -45,6 +46,8 @@ function App() {
           </div>
         </div>
       </section>
+
+      {/* CIELAB section moved to end as requested */}
 
 
 
@@ -326,6 +329,26 @@ function App() {
         </div>
       </section>
 
+      <section id="cielab-space" data-topic="CIELAB Color Space" className="credits-section" aria-labelledby="cielab-heading" style={{ marginTop: '3.2rem' }}>
+        <h2 id="cielab-heading" className="credits-title garamond">CIELAB Colour Space</h2>
+        {/* Two-column layout: left explanatory text, right 3D model canvas */}
+        <div style={{ display: 'grid', gridTemplateColumns: '400px 1fr', gap: '2.2rem', alignItems: 'start', marginTop: '1.2rem' }}>
+          <div style={{ maxWidth: '400px' }}>
+            <div className="intro-text" style={{ fontSize: '14px', color: '#444', lineHeight: 1.6 }}>
+              CIELAB represents colour using three axes: L* (lightness), a* (green ↔ red), and b* (blue ↔ yellow). Neutral greys sit along the L* axis, while chromatic colours extend outward along a* and b*. Its design aims for perceptual uniformity: equal numeric shifts try to feel like equal visual shifts, making it practical for assessing colour differences (ΔE) in industries like printing, textiles, and packaging.
+              <br /><br />
+              <b>What does CIELAB stand for?</b><br />
+              CIE is the International Commission on Illumination (Commission Internationale de l'Éclairage). LAB denotes the three coordinates. Plotting a colour places it at a point where lightness sets height, and a* / b* define its chromatic direction and distance from the neutral axis.
+            </div>
+          </div>
+          <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ width: '400px', height: '400px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <CIELABColorSpace3D />
+            </div>
+          </div>
+        </div>
+      </section>
+
       
 
       <section id="references" data-topic="References" className="credits-section" aria-labelledby="references-heading">
@@ -363,6 +386,7 @@ function App() {
         </ul>
       </section>
       <Footer />
+
 
       {/* Right-edge hover-to-reveal scroll rail (auto-discovers topics via [data-topic]) */}
       <ScrollRail />
