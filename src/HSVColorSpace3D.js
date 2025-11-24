@@ -50,7 +50,7 @@ function hsvToRgb(h, s, v) {
   return [r, g, b];
 }
 
-export default function HSVColorSpace3D({ hueDeg = 0, ballHeight = 1, radiusPct = 100, markerType = 'sphere' }) {
+export default function HSVColorSpace3D({ hueDeg = 0, ballHeight = 1, radiusPct = 100, markerType = 'sphere', onHueChange, onRadiusChange }) {
   const mountRef = useRef(null);
   // external control props (hueDeg in degrees, ballHeight 0..1, radiusPct 0..100)
   const hueRef = useRef(hueDeg);
@@ -98,9 +98,9 @@ export default function HSVColorSpace3D({ hueDeg = 0, ballHeight = 1, radiusPct 
       svCanvas.width = svW;
       svCanvas.height = svH;
       svCanvas.style.position = 'absolute';
-    // move the preview further down so it sits below any headings and aligned with controls
-    // increased from 150px to 220px to lower the canvas further down the page
-    svCanvas.style.top = '140px';
+      // move the preview further down so it sits below any headings and aligned with controls
+      // increased from 150px to 220px to lower the canvas further down the page
+      svCanvas.style.top = '140px';
       svCanvas.style.left = '8px';
       svCanvas.style.width = svW + 'px';
       svCanvas.style.height = svH + 'px';
@@ -117,6 +117,35 @@ export default function HSVColorSpace3D({ hueDeg = 0, ballHeight = 1, radiusPct 
       svHost.appendChild(svCanvas);
       svCtx = svCanvas.getContext('2d');
       svImage = svCtx.createImageData(svW, svH);
+    } else if (markerType === 'circle') {
+      // HS preview (circular)
+      svW = 220;
+      svH = 220;
+      svCanvas = document.createElement('canvas');
+      svCanvas.width = svW;
+      svCanvas.height = svH;
+      svCanvas.style.position = 'absolute';
+      svCanvas.style.top = '140px';
+      svCanvas.style.left = '8px';
+      svCanvas.style.width = svW + 'px';
+      svCanvas.style.height = svH + 'px';
+      svCanvas.style.border = '1px solid rgba(0,0,0,0.25)';
+      svCanvas.style.boxShadow = '0 2px 6px rgba(0,0,0,0.15)';
+      svCanvas.style.borderRadius = '50%'; // Make it circular
+      svCanvas.style.zIndex = 2000;
+      svCanvas.style.pointerEvents = 'none';
+
+      svHost = container.parentElement && container.parentElement.nextElementSibling ? container.parentElement.nextElementSibling : container;
+      if (svHost && svHost.style) {
+        if (!svHost.style.position || svHost.style.position === 'static') svHost.style.position = 'relative';
+      }
+      svHost.appendChild(svCanvas);
+      svCtx = svCanvas.getContext('2d');
+      svImage = svCtx.createImageData(svW, svH);
+
+      // Circular preview is display-only; disable pointer interaction
+      svCanvas.style.pointerEvents = 'none';
+      svCanvas.style.cursor = 'default';
     }
 
     // Axes helper
@@ -143,8 +172,8 @@ export default function HSVColorSpace3D({ hueDeg = 0, ballHeight = 1, radiusPct 
       colorAttr.setXYZ(i, r, g, b);
     }
     geometry.setAttribute('color', colorAttr);
-  // make the cylinder more transparent so interior visuals (dot/strip) are easier to see
-  const material = new THREE.MeshBasicMaterial({ vertexColors: true, opacity: 0.45, transparent: true, side: THREE.DoubleSide, depthWrite: false });
+    // make the cylinder more transparent so interior visuals (dot/strip) are easier to see
+    const material = new THREE.MeshBasicMaterial({ vertexColors: true, opacity: 0.45, transparent: true, side: THREE.DoubleSide, depthWrite: false });
     const cylinder = new THREE.Mesh(geometry, material);
     scene.add(cylinder);
 
@@ -172,13 +201,13 @@ export default function HSVColorSpace3D({ hueDeg = 0, ballHeight = 1, radiusPct 
     hueRing.rotation.x = -Math.PI / 2;
     scene.add(hueRing);
     // (removed) radial saturation strip — using plane marker instead when needed
-  // Marker on the outer ring: either a small sphere (default) or a small plane/box
-  // normalize initial hue (hueRef holds degrees from parent props)
-  const initialHueDeg = hueRef.current || 0;
-  const initialHue = (initialHueDeg % 360 + 360) % 360 / 360; // normalized 0..1
+    // Marker on the outer ring: either a small sphere (default) or a small plane/box
+    // normalize initial hue (hueRef holds degrees from parent props)
+    const initialHueDeg = hueRef.current || 0;
+    const initialHue = (initialHueDeg % 360 + 360) % 360 / 360; // normalized 0..1
     const initialBallHeight = ballHeightRef.current || 1; // 0..1
     const initialRadius = radiusRef.current !== undefined ? radiusRef.current : 1;
-  const dotAngle = initialHue * 2 * Math.PI;
+    const dotAngle = initialHue * 2 * Math.PI;
     const dotRingRadius = initialRadius * ringOuterRadius;
     const initialY = initialBallHeight * heightCyl - heightCyl / 2;
 
@@ -196,7 +225,7 @@ export default function HSVColorSpace3D({ hueDeg = 0, ballHeight = 1, radiusPct 
         dotRingRadius * Math.sin(dotAngle)
       );
       scene.add(dotMesh);
-    } else {
+    } else if (markerType === 'plane') {
       // radial plane marker: a vertical plane that spans the cylinder height and extends from center to the ring
       const planeWidth = ringOuterRadius; // base width (will scale by radius percent in animate)
       const planeHeightFull = heightCyl; // full cylinder height
@@ -219,16 +248,39 @@ export default function HSVColorSpace3D({ hueDeg = 0, ballHeight = 1, radiusPct 
       }
       const planeColorAttr = new THREE.BufferAttribute(planeColorArr, 3);
       planeGeom.setAttribute('color', planeColorAttr);
-      // use vertex colors so the plane acts as a 2D color-picker (h chosen by hue slider)
-  // make the plane semi-transparent and participate in the depth buffer
-  // so it doesn't forcibly draw over other geometry (simpler, non-obstructing)
-  const planeMat = new THREE.MeshBasicMaterial({ vertexColors: true, side: THREE.DoubleSide, transparent: true, opacity: 0.65, depthTest: true, depthWrite: false });
+
+      const planeMat = new THREE.MeshBasicMaterial({ vertexColors: true, side: THREE.DoubleSide, transparent: true, opacity: 0.65, depthTest: true, depthWrite: false });
       planeMesh = new THREE.Mesh(planeGeom, planeMat);
-      // anchor the plane's inner edge at the cylinder center (mesh local origin now at inner edge)
       planeMesh.position.set(0, 0, 0);
-      // initial rotation aligns with the marker angle
       planeMesh.rotation.y = dotAngle;
-  // do not force render on top; let depth buffering decide ordering
+      scene.add(planeMesh);
+
+    } else if (markerType === 'circle') {
+      // Cross-section marker: a horizontal circle that moves up/down with Value
+      const crossSectionRadius = radius; // match cylinder radius
+      const crossSectionGeom = new THREE.CircleGeometry(crossSectionRadius, radialSegments);
+      // color the circle per-vertex according to (hue, saturation, value)
+      const csPos = crossSectionGeom.attributes.position;
+      const csColorArr = new Float32Array(csPos.count * 3);
+      const initialV = Math.min(Math.max(initialBallHeight, 0), 1);
+
+      for (let i = 0; i < csPos.count; i++) {
+        const x = csPos.getX(i);
+        const z = csPos.getY(i);
+        const h = (Math.atan2(z, x) + Math.PI) / (2 * Math.PI);
+        const s = Math.min(Math.sqrt(x * x + z * z) / crossSectionRadius, 1);
+        const [r, g, b] = hsvToRgb(h, s, initialV);
+        csColorArr[i * 3 + 0] = r;
+        csColorArr[i * 3 + 1] = g;
+        csColorArr[i * 3 + 2] = b;
+      }
+      const csColorAttr = new THREE.BufferAttribute(csColorArr, 3);
+      crossSectionGeom.setAttribute('color', csColorAttr);
+
+      const csMat = new THREE.MeshBasicMaterial({ vertexColors: true, side: THREE.DoubleSide, transparent: true, opacity: 0.85, depthTest: true, depthWrite: false });
+      planeMesh = new THREE.Mesh(crossSectionGeom, csMat);
+      planeMesh.rotation.x = -Math.PI / 2; // Rotate to horizontal
+      planeMesh.position.y = initialY;
       scene.add(planeMesh);
     }
 
@@ -236,8 +288,8 @@ export default function HSVColorSpace3D({ hueDeg = 0, ballHeight = 1, radiusPct 
     // and a horizontal radial dashed line from center to the dot at the dot's Y
     // older three builds sometimes don't expose geometry.computeLineDistances; to avoid that
     // we generate dashed geometry manually (many short segments) and draw them with LineSegments
-  // make guides black for higher contrast
-  const guideMat = new THREE.LineBasicMaterial({ color: 0x000000, transparent: true, opacity: 0.85, depthTest: false });
+    // make guides black for higher contrast
+    const guideMat = new THREE.LineBasicMaterial({ color: 0x000000, transparent: true, opacity: 0.85, depthTest: false });
 
     function createDashedGeometry(start, end, dashSize = 0.06, gapSize = 0.04) {
       const dir = new THREE.Vector3().subVectors(end, start);
@@ -249,7 +301,7 @@ export default function HSVColorSpace3D({ hueDeg = 0, ballHeight = 1, radiusPct 
         return g;
       }
       dir.normalize();
-        const period = dashSize + gapSize;
+      const period = dashSize + gapSize;
       // estimate vertices: each segment yields one dashed segment (2 points)
       const positions = [];
       let cursor = 0;
@@ -341,8 +393,8 @@ export default function HSVColorSpace3D({ hueDeg = 0, ballHeight = 1, radiusPct 
       topCapColor.setXYZ(i, r, g, b);
     }
     topCapGeom.setAttribute('color', topCapColor);
-  // make the top cap semi-transparent so interior visuals remain visible
-  const topCapMat = new THREE.MeshBasicMaterial({ vertexColors: true, opacity: 0.6, transparent: true, side: THREE.DoubleSide, depthWrite: false });
+    // make the top cap semi-transparent so interior visuals remain visible
+    const topCapMat = new THREE.MeshBasicMaterial({ vertexColors: true, opacity: 0.6, transparent: true, side: THREE.DoubleSide, depthWrite: false });
     const topCap = new THREE.Mesh(topCapGeom, topCapMat);
     topCap.position.y = heightCyl / 2;
     topCap.rotation.x = -Math.PI / 2;
@@ -401,32 +453,56 @@ export default function HSVColorSpace3D({ hueDeg = 0, ballHeight = 1, radiusPct 
         dotMesh.position.set(vx, vy, vz);
       }
       if (planeMesh) {
-        // plane is anchored at the center (local origin). Scale its width to match radius % and rotate it.
-        const rrNow = Math.min(Math.max(radiusRef.current, 0), 1);
-        planeMesh.scale.set(rrNow, 1, 1); // geometry was built with full ringOuterRadius width
-        // rotate so the plane faces the same radial direction as the dotted radius line
-        const angle = Math.atan2(vz, vx); // equals h * 2pi
-        planeMesh.rotation.y = angle;
-        // ensure plane renders above semi-transparent cylinder
-  // keep default render order and depth test so the plane doesn't always occlude other objects
-        // update per-vertex colors on the plane to reflect current hue
-        const pg = planeMesh.geometry;
-        if (pg && pg.attributes && pg.attributes.position && pg.attributes.color) {
-          const ppos = pg.attributes.position;
-          const pcol = pg.attributes.color.array;
-          const pw = ringOuterRadius; // original plane width used when constructing geometry
-          const ph = heightCyl;
-          for (let i = 0; i < ppos.count; i++) {
-            const px = ppos.getX(i); // 0..pw after translate
-            const py = ppos.getY(i);
-            const s = Math.min(Math.max(px / pw, 0), 1);
-            const vvv = (py + ph / 2) / ph;
-            const [pr, pgc, pbb] = hsvToRgb(h, s, vvv);
-            pcol[i * 3 + 0] = pr;
-            pcol[i * 3 + 1] = pgc;
-            pcol[i * 3 + 2] = pbb;
+        if (markerType === 'plane') {
+          // Update vertical plane: rotate and scale
+          const rrNow = Math.min(Math.max(radiusRef.current, 0), 1);
+          planeMesh.scale.set(rrNow, 1, 1);
+          const angle = Math.atan2(vz, vx);
+          planeMesh.rotation.y = angle;
+
+          // Update colors for hue
+          const pg = planeMesh.geometry;
+          if (pg && pg.attributes && pg.attributes.position && pg.attributes.color) {
+            const ppos = pg.attributes.position;
+            const pcol = pg.attributes.color.array;
+            const pw = ringOuterRadius;
+            const ph = heightCyl;
+            for (let i = 0; i < ppos.count; i++) {
+              const px = ppos.getX(i);
+              const py = ppos.getY(i);
+              const s = Math.min(Math.max(px / pw, 0), 1);
+              const vvv = (py + ph / 2) / ph;
+              const [pr, pgc, pbb] = hsvToRgb(h, s, vvv);
+              pcol[i * 3 + 0] = pr;
+              pcol[i * 3 + 1] = pgc;
+              pcol[i * 3 + 2] = pbb;
+            }
+            pg.attributes.color.needsUpdate = true;
           }
-          pg.attributes.color.needsUpdate = true;
+        } else if (markerType === 'circle') {
+          // Update horizontal circle: move Y and update colors for Value
+          const bh = Math.min(Math.max(ballHeightRef.current, 0), 1);
+          const yPos = bh * heightCyl - heightCyl / 2;
+          planeMesh.position.y = yPos;
+
+          const pg = planeMesh.geometry;
+          if (pg && pg.attributes && pg.attributes.position && pg.attributes.color) {
+            const ppos = pg.attributes.position;
+            const pcol = pg.attributes.color.array;
+            const csRadius = radius;
+
+            for (let i = 0; i < ppos.count; i++) {
+              const x = ppos.getX(i);
+              const y = ppos.getY(i);
+              const h = (Math.atan2(y, x) + Math.PI) / (2 * Math.PI);
+              const s = Math.min(Math.sqrt(x * x + y * y) / csRadius, 1);
+              const [r, g, b] = hsvToRgb(h, s, bh);
+              pcol[i * 3 + 0] = r;
+              pcol[i * 3 + 1] = g;
+              pcol[i * 3 + 2] = b;
+            }
+            pg.attributes.color.needsUpdate = true;
+          }
         }
       }
       // update guide lines to follow the marker by regenerating dashed geometries
@@ -437,48 +513,86 @@ export default function HSVColorSpace3D({ hueDeg = 0, ballHeight = 1, radiusPct 
         const newVStart = new THREE.Vector3(vx, -heightCyl / 2, vz);
         const newVEnd = new THREE.Vector3(vx, heightCyl / 2, vz);
         const newVGeom = createDashedGeometry(newVStart, newVEnd);
-        try { verticalLine.geometry.dispose(); } catch (e) {}
+        try { verticalLine.geometry.dispose(); } catch (e) { }
         verticalLine.geometry = newVGeom;
         verticalGeom = newVGeom;
         // radial: from center to dot at current Y
         const newRStart = new THREE.Vector3(0, vy, 0);
         const newREnd = new THREE.Vector3(vx, vy, vz);
         const newRGeom = createDashedGeometry(newRStart, newREnd);
-        try { radialLine.geometry.dispose(); } catch (e) {}
+        try { radialLine.geometry.dispose(); } catch (e) { }
         radialLine.geometry = newRGeom;
         radialGeom = newRGeom;
       }
-        // update top radial: keep it on top and rotate to match ball's angle
-        if (topRadial) {
-          // set rotation to hue angle (match sphere direction)
-          // invert sign if needed so it rotates in the same direction as the sphere
-          topRadial.rotation.y = -h * 2 * Math.PI;
-          // optionally scale length based on radiusRef so it matches ball direction visually
-          const rrTop = Math.min(Math.max(radiusRef.current, 0), 1);
-          const topLength = ringOuterRadius * rrTop;
-          const newTopGeom = createDashedGeometry(new THREE.Vector3(0, 0, 0), new THREE.Vector3(topLength, 0, 0));
-          try { topRadial.geometry.dispose(); } catch (e) {}
-          topRadial.geometry = newTopGeom;
-          topRadialGeom = newTopGeom;
-          // keep top radial black for clarity
-          try { topRadial.material.color.setRGB(0, 0, 0); } catch (e) {}
-        }
-      // update SV preview canvas to reflect current hue
+      // update top radial: keep it on top and rotate to match ball's angle
+      if (topRadial) {
+        // set rotation to hue angle (match sphere direction)
+        // invert sign if needed so it rotates in the same direction as the sphere
+        topRadial.rotation.y = -h * 2 * Math.PI;
+        // optionally scale length based on radiusRef so it matches ball direction visually
+        const rrTop = Math.min(Math.max(radiusRef.current, 0), 1);
+        const topLength = ringOuterRadius * rrTop;
+        const newTopGeom = createDashedGeometry(new THREE.Vector3(0, 0, 0), new THREE.Vector3(topLength, 0, 0));
+        try { topRadial.geometry.dispose(); } catch (e) { }
+        topRadial.geometry = newTopGeom;
+        topRadialGeom = newTopGeom;
+        // keep top radial black for clarity
+        try { topRadial.material.color.setRGB(0, 0, 0); } catch (e) { }
+      }
+      // update SV/HS preview canvas to reflect current hue/value/saturation
       if (svCtx && svImage) {
-        // fill image data: x -> saturation (0..1), y -> value (1..0 top->bottom)
-        let idx = 0;
-        for (let yy = 0; yy < svH; yy++) {
-          const vvv = 1 - yy / (svH - 1); // top = 1, bottom = 0
-          for (let xx = 0; xx < svW; xx++) {
-            const ss = xx / (svW - 1);
-            const [rr, gg, bb] = hsvToRgb(h, ss, vvv);
-            svImage.data[idx++] = Math.round(rr * 255);
-            svImage.data[idx++] = Math.round(gg * 255);
-            svImage.data[idx++] = Math.round(bb * 255);
-            svImage.data[idx++] = 255;
+        if (markerType === 'plane') {
+          // fill image data: x -> saturation (0..1), y -> value (1..0 top->bottom)
+          let idx = 0;
+          for (let yy = 0; yy < svH; yy++) {
+            const vvv = 1 - yy / (svH - 1); // top = 1, bottom = 0
+            for (let xx = 0; xx < svW; xx++) {
+              const ss = xx / (svW - 1);
+              const [rr, gg, bb] = hsvToRgb(h, ss, vvv);
+              svImage.data[idx++] = Math.round(rr * 255);
+              svImage.data[idx++] = Math.round(gg * 255);
+              svImage.data[idx++] = Math.round(bb * 255);
+              svImage.data[idx++] = 255;
+            }
           }
+          svCtx.putImageData(svImage, 0, 0);
+        } else if (markerType === 'circle') {
+          // fill image data: circular HS cross-section at current Value
+          const cx = svW / 2;
+          const cy = svH / 2;
+          const radius = svW / 2;
+          const bh = Math.min(Math.max(ballHeightRef.current, 0), 1); // current Value
+
+          let idx = 0;
+          for (let yy = 0; yy < svH; yy++) {
+            for (let xx = 0; xx < svW; xx++) {
+              const dx = xx - cx;
+              const dy = yy - cy;
+              const dist = Math.sqrt(dx * dx + dy * dy);
+
+              if (dist > radius) {
+                // transparent outside circle
+                svImage.data[idx++] = 0;
+                svImage.data[idx++] = 0;
+                svImage.data[idx++] = 0;
+                svImage.data[idx++] = 0;
+              } else {
+                const s = dist / radius; // Saturation 0..1
+                // Hue is angle; use -dy so canvas Y-down maps to 3D's positive z direction
+                let angle = Math.atan2(-dy, dx);
+                const hAngle = (angle + Math.PI) / (2 * Math.PI); // 0..1
+                const [rr, gg, bb] = hsvToRgb(hAngle, s, bh);
+                svImage.data[idx++] = Math.round(rr * 255);
+                svImage.data[idx++] = Math.round(gg * 255);
+                svImage.data[idx++] = Math.round(bb * 255);
+                svImage.data[idx++] = 255;
+              }
+            }
+          }
+          svCtx.putImageData(svImage, 0, 0);
+
+          // No indicator dot: circular preview is display-only and mirrors cylinder colors
         }
-        svCtx.putImageData(svImage, 0, 0);
       }
 
       // update vertical bar colors to show value gradient for current hue
@@ -496,8 +610,8 @@ export default function HSVColorSpace3D({ hueDeg = 0, ballHeight = 1, radiusPct 
       // radial strip removed — no update necessary
       renderer.render(scene, camera);
       rafId = requestAnimationFrame(animate);
-  };
-  animate();
+    };
+    animate();
 
     // Resize
     const handleResize = () => {
@@ -510,7 +624,7 @@ export default function HSVColorSpace3D({ hueDeg = 0, ballHeight = 1, radiusPct 
     };
     window.addEventListener('resize', handleResize);
     setTimeout(handleResize, 0);
-    
+
 
     return () => {
       cancelAnimationFrame(rafId);
@@ -520,17 +634,17 @@ export default function HSVColorSpace3D({ hueDeg = 0, ballHeight = 1, radiusPct 
       try {
         if (verticalLine) {
           scene.remove(verticalLine);
-          try { verticalGeom && verticalGeom.dispose(); } catch (e) {}
+          try { verticalGeom && verticalGeom.dispose(); } catch (e) { }
         }
         if (radialLine) {
           scene.remove(radialLine);
-          try { radialGeom && radialGeom.dispose(); } catch (e) {}
+          try { radialGeom && radialGeom.dispose(); } catch (e) { }
         }
         if (topRadial) {
           scene.remove(topRadial);
-          try { topRadial.geometry && topRadial.geometry.dispose(); } catch (e) {}
+          try { topRadial.geometry && topRadial.geometry.dispose(); } catch (e) { }
         }
-        try { guideMat.dispose(); } catch (e) {}
+        try { guideMat.dispose(); } catch (e) { }
       } catch (e) {
         // ignore disposal errors
       }
@@ -541,7 +655,7 @@ export default function HSVColorSpace3D({ hueDeg = 0, ballHeight = 1, radiusPct 
           if (svHost && svHost.contains(svCanvas)) svHost.removeChild(svCanvas);
           else if (container.contains(svCanvas)) container.removeChild(svCanvas);
         }
-      } catch (e) {}
+      } catch (e) { }
     };
   }, [markerType]);
 

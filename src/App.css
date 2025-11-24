@@ -405,3 +405,50 @@ body { margin: 0; }
 .omen-text {
   font-family: 'NewYork Local', Georgia, 'Times New Roman', serif;
 }
+
+/* Styled Value range input: shows gradient from black -> current hue */
+.value-range {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 10px;
+  border-radius: 999px;
+  background: linear-gradient(to right, #000, hsl(var(--hue, 0), 100%, 50%));
+  outline: none;
+}
+.value-range:focus { box-shadow: 0 0 0 3px rgba(13,77,161,0.06); }
+
+/* WebKit track & thumb */
+.value-range::-webkit-slider-runnable-track {
+  height: 10px;
+  border-radius: 999px;
+  background: linear-gradient(to right, #000, hsl(var(--hue, 0), 100%, 50%));
+}
+.value-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  margin-top: -4px; /* center the thumb */
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  border: 1.5px solid rgba(0,0,0,0.12);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+}
+
+/* Firefox */
+.value-range::-moz-range-track {
+  height: 10px;
+  border-radius: 999px;
+  background: linear-gradient(to right, #000, hsl(var(--hue, 0), 100%, 50%));
+}
+.value-range::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  border: 1.5px solid rgba(0,0,0,0.12);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+}
+
+/* Ensure the unstyled input doesn't show default focus outline on some browsers */
+.value-range::-ms-track { background: transparent; border: 0; }
