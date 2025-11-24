@@ -316,12 +316,8 @@ function App() {
           The Munsell color system is a way to describe colors using three clear qualities: hue, value, and chroma. Hue tells you the basic color family, value shows how light or dark the color is, and chroma tells how strong or dull the color looks. It is arranged like a three-dimensional space so each quality can change on its own. The system is based on how people actually see color, so it stays consistent, practical, and easy to compare across different uses.
         </div>
       </section>
-      <section id="munsell" data-topic="Munsell" className="credits-section" aria-labelledby="munsell-heading">
-        <h2 id="munsell-heading" className="credits-title garamond" style={{ fontSize: '1rem', marginTop: '1.4rem' }}>Munsell Color System</h2>
-        <div className="intro-text" style={{ fontSize: '14px', color: '#444', marginTop: '0.6rem', lineHeight: 1.6 }}>
-          The Munsell system organizes colours by three perceptual attributes: Hue (five principal hues with intermediate steps), Value (lightness from black 0 to white 10), and Chroma (colour strength radiating outward). Unlike HSV’s geometric cylinder, Munsell is arranged so equal visual steps feel uniform, producing an irregular three‑dimensional solid. This section will illustrate its structure and compare it with HSV.
-        </div>
-      </section>
+
+      
 
       <section id="references" data-topic="References" className="credits-section" aria-labelledby="references-heading">
         <h2 id="references-heading" className="credits-title garamond">REFERENCES</h2>
