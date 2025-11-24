@@ -280,7 +280,9 @@ function App() {
                 <div style={{ marginTop: '1.2rem', display: 'flex', flexDirection: 'column', gap: '0.8rem', alignItems: 'flex-start' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
                     <label style={{ width: 56, textAlign: 'right' }}>Value</label>
-                    <input className="value-range" type="range" min={0} max={100} value={Math.round(ballHeight3 * 100)} onChange={e => setBallHeight3(Number(e.target.value) / 100)} style={{ width: 220, '--hue': hueDeg3 }} />
+                    <div className="value-host" style={{ position: 'relative', width: 220 }}>
+                      <input className="value-range" type="range" min={0} max={100} value={Math.round(ballHeight3 * 100)} onChange={e => setBallHeight3(Number(e.target.value) / 100)} style={{ width: '100%', '--hue': hueDeg3 }} />
+                    </div>
                     <div style={{ width: 48 }}>{Math.round(ballHeight3 * 100)}%</div>
                   </div>
                   {/* Radius control removed for the third (circle) HSV preview */}

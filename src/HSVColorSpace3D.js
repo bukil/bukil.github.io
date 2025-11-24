@@ -125,8 +125,9 @@ export default function HSVColorSpace3D({ hueDeg = 0, ballHeight = 1, radiusPct 
       svCanvas.width = svW;
       svCanvas.height = svH;
       svCanvas.style.position = 'absolute';
-      svCanvas.style.top = '140px';
-      svCanvas.style.left = '8px';
+      // Default placement: align within the controls column. If a specific host
+      // element with class `value-host` exists, attach to it and center the
+      // circular preview above the Value slider.
       svCanvas.style.width = svW + 'px';
       svCanvas.style.height = svH + 'px';
       svCanvas.style.border = '1px solid rgba(0,0,0,0.25)';
@@ -138,6 +139,20 @@ export default function HSVColorSpace3D({ hueDeg = 0, ballHeight = 1, radiusPct 
       svHost = container.parentElement && container.parentElement.nextElementSibling ? container.parentElement.nextElementSibling : container;
       if (svHost && svHost.style) {
         if (!svHost.style.position || svHost.style.position === 'static') svHost.style.position = 'relative';
+        // prefer a more specific host if available (the wrapper around the Value slider)
+        const customHost = svHost.querySelector && svHost.querySelector('.value-host');
+        if (customHost) {
+          svHost = customHost;
+          // position the preview centered relative to the host element
+          svCanvas.style.left = '50%';
+          svCanvas.style.transform = 'translateX(-50%)';
+          // Place the circle a bit further below the slider
+          svCanvas.style.top = 'calc(100% + 36px)';
+        } else {
+          // fallback absolute position within controls column (moved further down)
+          svCanvas.style.top = '260px';
+          svCanvas.style.left = '20px';
+        }
       }
       svHost.appendChild(svCanvas);
       svCtx = svCanvas.getContext('2d');
