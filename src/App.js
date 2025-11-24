@@ -6,6 +6,7 @@ import VisibleSpectrumCanvas from './VisibleSpectrumCanvas';
 import ConeRodResponseCanvas from './ConeRodResponseCanvas';
 import ProjectorScene from './ProjectorScene';
 import ScrollRail from './ScrollRail';
+import MunsellColorSpace3D from './MunsellColorSpace3D';
 import ColorPalette from './ColorPalette';
 import RGBColorSpace3D from './RGBColorSpace3D';
 import HSVColorSpace3D from './HSVColorSpace3D';
@@ -314,6 +315,14 @@ function App() {
         <h2 id="color-space-heading" className="credits-title garamond">Munsell Colour Space</h2>
         <div className="intro-text" style={{ fontSize: '14px', color: '#444', marginTop: '0.6rem', lineHeight: 1.6, width: '100%', maxWidth: '100%' }}>
           The Munsell color system is a way to describe colors using three clear qualities: hue, value, and chroma. Hue tells you the basic color family, value shows how light or dark the color is, and chroma tells how strong or dull the color looks. It is arranged like a three-dimensional space so each quality can change on its own. The system is based on how people actually see color, so it stays consistent, practical, and easy to compare across different uses.
+        </div>
+        <div style={{ width: '100%', marginTop: '1.6rem' }}>
+          <MunsellColorSpace3D />
+        </div>
+        <div className="intro-text" style={{ fontSize: '14px', color: '#444', marginTop: '1.4rem', lineHeight: 1.6, width: '100%', maxWidth: '100%' }}>
+          The Munsell system has a distorted shape because human color vision is not evenly spaced. Our eyes notice some color changes more easily than others, so the space must stretch or squeeze to match how we actually see.
+          For example, we can see many small differences in green, so the green region expands. We see fewer differences in blue and yellow, so those regions become tighter. Chroma also does not increase equally for every hue, which bends the outer shape even more.
+          The result is a color space that looks uneven, but the unevenness is the point. It reflects the natural limits and sensitivities of human perception rather than forcing colors into a perfect geometric form.
         </div>
       </section>
 
