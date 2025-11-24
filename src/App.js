@@ -232,7 +232,7 @@ function App() {
                 <div style={{ marginTop: '1.2rem', display: 'flex', flexDirection: 'column', gap: '0.8rem', alignItems: 'flex-start' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginTop: '1.2rem' }}>
                     <label style={{ width: 56, textAlign: 'right' }}>Hue</label>
-                    <input type="range" min={0} max={360} value={hueDeg} onChange={e => setHueDeg(Number(e.target.value))} style={{ width: 220 }} />
+                    <input className="hue-range" type="range" min={0} max={360} value={hueDeg} onChange={e => setHueDeg(Number(e.target.value))} style={{ width: 220 }} />
                     <div style={{ width: 60 }}>{Math.round(hueDeg)}°</div>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
@@ -242,7 +242,7 @@ function App() {
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
                     <label style={{ width: 56, textAlign: 'right' }}>Saturation</label>
-                    <input type="range" min={0} max={100} value={Math.round(radiusPct)} onChange={e => setRadiusPct(Number(e.target.value))} style={{ width: 220 }} />
+                    <input className="sat-range" type="range" min={0} max={100} value={Math.round(radiusPct)} onChange={e => setRadiusPct(Number(e.target.value))} style={{ width: 220, '--hue': hueDeg }} />
                     <div style={{ width: 48 }}>{Math.round(radiusPct)}%</div>
                   </div>
                 </div>
@@ -257,7 +257,7 @@ function App() {
                 <div style={{ marginTop: '1.2rem', display: 'flex', flexDirection: 'column', gap: '0.8rem', alignItems: 'flex-start' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginTop: '2.5rem' }}>
                     <label style={{ width: 56, textAlign: 'right' }}>Hue</label>
-                    <input type="range" min={0} max={360} value={hueDeg2} onChange={e => setHueDeg2(Number(e.target.value))} style={{ width: 220 }} />
+                    <input className="hue-range" type="range" min={0} max={360} value={hueDeg2} onChange={e => setHueDeg2(Number(e.target.value))} style={{ width: 220 }} />
                     <div style={{ width: 48 }}>{Math.round(hueDeg2)}°</div>
                   </div>
                   {/* Height and Radius controls removed for the second (plane) HSV preview */}
