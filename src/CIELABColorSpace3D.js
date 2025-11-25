@@ -104,10 +104,69 @@ export default function CIELABColorSpace3D() {
         labRoot.position.sub(scaledCenter);
         const scaledSize = new THREE.Vector3(); scaledBox.getSize(scaledSize);
         const maxDim = Math.max(scaledSize.x, scaledSize.y, scaledSize.z);
-        camera.zoom = frustumSize / (maxDim * 1.05);
+        camera.zoom = frustumSize / (maxDim * 1.6);
         camera.updateProjectionMatrix();
-        scene.add(labRoot);
-        // Replace axis frame with end-cap arrowheads (no overlapping origins)
+        // scene.add(labRoot); // Moved to contentGroup below
+        // Dynamic axis colors: sample mesh material colours at extremes
+        function avgColorHex(list) {
+            if(!list.length) return '#555555';
+            let r=0,g=0,b=0; list.forEach(c=>{ r+=c.r; g+=c.g; b+=c.b; });
+            r/=list.length; g/=list.length; b/=list.length;
+            const toHex = v => Math.round(Math.max(0,Math.min(1,v))*255).toString(16).padStart(2,'0');
+            return '#'+toHex(r)+toHex(g)+toHex(b);
+        }
+
+        // Ensure world matrices are up to date for accurate sampling
+        labRoot.updateMatrixWorld(true);
+
+        const samples = { xPos:[], xNeg:[], zPos:[], zNeg:[], yPos:[], yNeg:[] };
+        const threshX = scaledSize.x * 0.4;
+        const threshZ = scaledSize.z * 0.4;
+        const threshY = scaledSize.y * 0.4;
+        
+        const boxWorld = new THREE.Box3().setFromObject(labRoot);
+        const centerWorld = new THREE.Vector3(); boxWorld.getCenter(centerWorld);
+
+        labRoot.traverse(obj=>{
+          if(obj.isMesh && obj.material && obj.material.color){
+            const p = new THREE.Vector3();
+            obj.getWorldPosition(p);
+            const col = obj.material.color.clone();
+            
+            const relX = p.x - centerWorld.x;
+            const relY = p.y - centerWorld.y;
+            const relZ = p.z - centerWorld.z;
+
+            if(relX >  threshX) samples.xPos.push(col);
+            if(relX < -threshX) samples.xNeg.push(col);
+            if(relZ >  threshZ) samples.zPos.push(col);
+            if(relZ < -threshZ) samples.zNeg.push(col);
+            if(relY >  threshY) samples.yPos.push(col);
+            if(relY < -threshY) samples.yNeg.push(col);
+          }
+        });
+
+        const colXPos = new THREE.Color(avgColorHex(samples.xPos));
+        const colXNeg = new THREE.Color(avgColorHex(samples.xNeg));
+        const colZPos = new THREE.Color(avgColorHex(samples.zPos));
+        const colZNeg = new THREE.Color(avgColorHex(samples.zNeg));
+        const colYPos = new THREE.Color(avgColorHex(samples.yPos));
+        const colYNeg = new THREE.Color(avgColorHex(samples.yNeg));
+
+        function getDominantHueName(color) {
+            const hsl = {};
+            color.getHSL(hsl);
+            const h = hsl.h * 360;
+            if (h >= 330 || h < 30) return 'red';
+            if (h >= 30 && h < 90) return 'yellow';
+            if (h >= 90 && h < 150) return 'green';
+            if (h >= 150 && h < 210) return 'cyan';
+            if (h >= 210 && h < 270) return 'blue';
+            if (h >= 270 && h < 330) return 'magenta';
+            return 'gray';
+        }
+
+        // Build corrected axis arrows (L* now bidirectional: low→high)
         const axisGroup = new THREE.Group();
         const axisLen = Math.max(scaledSize.x, scaledSize.y, scaledSize.z) * 0.55;
         const headLen = axisLen * 0.09;
@@ -116,49 +175,56 @@ export default function CIELABColorSpace3D() {
           const nDir = dir.clone().normalize();
           const negEnd = nDir.clone().multiplyScalar(-axisLen);
           const posEnd = nDir.clone().multiplyScalar(axisLen);
-          // Axis line
           const geom = new THREE.BufferGeometry().setFromPoints([negEnd, posEnd]);
-          const line = new THREE.Line(geom, new THREE.LineBasicMaterial({ color: 0x444444 }));
+          const line = new THREE.Line(geom, new THREE.LineBasicMaterial({ color: 0x454545 }));
           axisGroup.add(line);
-          // Arrowheads (cones)
-          const coneGeomPos = new THREE.ConeGeometry(headRadius, headLen, 18);
-          const coneMatPos = new THREE.MeshBasicMaterial({ color: colorPos });
-          const conePos = new THREE.Mesh(coneGeomPos, coneMatPos);
+          const coneGeom = new THREE.ConeGeometry(headRadius, headLen, 20);
+          // Positive
+          const conePos = new THREE.Mesh(coneGeom, new THREE.MeshBasicMaterial({ color: colorPos }));
           conePos.position.copy(posEnd);
           conePos.lookAt(posEnd.clone().add(nDir));
           axisGroup.add(conePos);
-          const coneGeomNeg = new THREE.ConeGeometry(headRadius, headLen, 18);
-          const coneMatNeg = new THREE.MeshBasicMaterial({ color: colorNeg });
-          const coneNeg = new THREE.Mesh(coneGeomNeg, coneMatNeg);
+          // Negative
+          const coneNeg = new THREE.Mesh(coneGeom.clone(), new THREE.MeshBasicMaterial({ color: colorNeg }));
           coneNeg.position.copy(negEnd);
           coneNeg.lookAt(negEnd.clone().add(nDir.clone().negate()));
           axisGroup.add(coneNeg);
-          // Labels
           const posLabel = makeLabelSprite(labelPos, '#111');
-          posLabel.position.copy(posEnd.clone().add(nDir.clone().multiplyScalar(headLen*1.4)));
+          posLabel.position.copy(posEnd.clone().add(nDir.clone().multiplyScalar(headLen*1.6)));
           axisGroup.add(posLabel);
           const negLabel = makeLabelSprite(labelNeg, '#111');
-          negLabel.position.copy(negEnd.clone().add(nDir.clone().multiplyScalar(-headLen*1.4)));
+          negLabel.position.copy(negEnd.clone().add(nDir.clone().multiplyScalar(-headLen*1.6)));
           axisGroup.add(negLabel);
         }
-        // L* axis (single direction upward 0→100)
-        const lLine = new THREE.Line(new THREE.BufferGeometry().setFromPoints([
-          new THREE.Vector3(0,0,0), new THREE.Vector3(0,axisLen,0)
-        ]), new THREE.LineBasicMaterial({ color: 0x555555 }));
-        axisGroup.add(lLine);
-        const lConeGeom = new THREE.ConeGeometry(headRadius, headLen, 18);
-        const lCone = new THREE.Mesh(lConeGeom, new THREE.MeshBasicMaterial({ color: 0x222222 }));
-        lCone.position.set(0, axisLen, 0);
-        lCone.lookAt(0, axisLen + 1, 0);
-        axisGroup.add(lCone);
-        const lLabel = makeLabelSprite('L*', '#111');
-        lLabel.position.set(0, axisLen + headLen*1.6, 0);
-        axisGroup.add(lLabel);
-        // a* axis (negative green, positive red)
-        addBidirectional(new THREE.Vector3(1,0,0), 0xff2222, 0x118822, '+a* (red)', '-a* (green)');
-        // b* axis (negative blue, positive yellow)
-        addBidirectional(new THREE.Vector3(0,0,1), 0xffd200, 0x2060ff, '+b* (yellow)', '-b* (blue)');
-        scene.add(axisGroup);
+        // L* (treat negative as dark / low lightness, positive as high lightness)
+        addBidirectional(new THREE.Vector3(0,1,0), colYPos, colYNeg, 'L* High', 'L* Low');
+        
+        // Determine X Axis Labels
+        const xPosHue = getDominantHueName(colXPos);
+        const xNegHue = getDominantHueName(colXNeg);
+        let xLabelPos = '+a* (red)', xLabelNeg = '-a* (green)'; // default
+        if (xPosHue === 'yellow' || xNegHue === 'blue') { xLabelPos = '+b* (yellow)'; xLabelNeg = '-b* (blue)'; }
+        else if (xPosHue === 'blue' || xNegHue === 'yellow') { xLabelPos = '-b* (blue)'; xLabelNeg = '+b* (yellow)'; }
+        else if (xPosHue === 'green' || xNegHue === 'red') { xLabelPos = '-a* (green)'; xLabelNeg = '+a* (red)'; }
+        
+        addBidirectional(new THREE.Vector3(1,0,0), colXPos, colXNeg, xLabelPos, xLabelNeg);
+
+        // Determine Z Axis Labels
+        const zPosHue = getDominantHueName(colZPos);
+        const zNegHue = getDominantHueName(colZNeg);
+        let zLabelPos = '+b* (yellow)', zLabelNeg = '-b* (blue)'; // default
+        if (zPosHue === 'red' || zNegHue === 'green') { zLabelPos = '+a* (red)'; zLabelNeg = '-a* (green)'; }
+        else if (zPosHue === 'green' || zNegHue === 'red') { zLabelPos = '-a* (green)'; zLabelNeg = '+a* (red)'; }
+        else if (zPosHue === 'blue' || zNegHue === 'yellow') { zLabelPos = '-b* (blue)'; zLabelNeg = '+b* (yellow)'; }
+        
+        addBidirectional(new THREE.Vector3(0,0,1), colZPos, colZNeg, zLabelPos, zLabelNeg);
+        
+        const contentGroup = new THREE.Group();
+        contentGroup.add(labRoot);
+        contentGroup.add(axisGroup);
+        contentGroup.rotation.y = Math.PI / 4; // Rotate 45 degrees anticlockwise
+        scene.add(contentGroup);
+
         controls.target.set(0, 0, 0);
         controls.update();
       },
@@ -189,5 +255,5 @@ export default function CIELABColorSpace3D() {
     };
   }, []);
 
-  return <div ref={mountRef} style={{ width: '100%', height: '400px' }} />;
+  return <div ref={mountRef} style={{ width: '100%', height: '500px' }} />;
 }
