@@ -11,6 +11,7 @@ import ColorPalette from './ColorPalette';
 import RGBColorSpace3D from './RGBColorSpace3D';
 import HSVColorSpace3D from './HSVColorSpace3D';
 import CIELABColorSpace3D from './CIELABColorSpace3D';
+import ColorMixer from './ColorMixer';
 
 function App() {
   const [hueDeg, setHueDeg] = useState(0);
@@ -67,15 +68,16 @@ function App() {
 
       {/* Types of Color Mixture section (simple, full-width) */}
       <section id="types-of-mixture" className="intro-grid-section" aria-labelledby="types-heading">
-
         <div className="intro-grid" style={{ gridTemplateColumns: '1fr 1fr' }}>
-          <div className="intro-col intro-slot" />
+          {/* Left column now hosts the interactive mixer */}
+          <div className="intro-col" style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
+            <ColorMixer />
+          </div>
+          {/* Right column retains heading and explanatory text */}
           <div className="intro-col">
             <h2 id="types-heading" className="credits-title garamond">TYPES OF COLOR MIXTURE</h2>
-            <p className="intro-text">Additive and subtractive colour mixing are two basic ways of creating colours. Additive colour mixing happens when different coloured lights combine, mainly red, green, and blue (RGB). When these lights overlap, they form new colours. For example, red and green make yellow, and combining all three gives white light. This method is used in digital screens and displays.
-
-              Subtractive colour mixing works with pigments, inks, or filters that absorb some wavelengths of light and reflect others, usually using cyan, magenta, and yellow (CMY). When these pigments mix, more light is absorbed, creating darker colours, and mixing all three can make black. This process involves more complex chemistry because it depends on how materials absorb and reflect light at the molecular level.
-
+            <p className="intro-text">Additive and subtractive colour mixing are two basic ways of creating colours. Additive colour mixing happens when different coloured lights combine, mainly red, green, and blue (RGB). When these lights overlap, they form new colours. For example, red and green make yellow, and combining all three gives white light. This method is used in digital screens and displays.<br /><br />
+              Subtractive colour mixing works with pigments, inks, or filters that absorb some wavelengths of light and reflect others, usually using cyan, magenta, and yellow (CMY). When these pigments mix, more light is absorbed, creating darker colours, and mixing all three can make black. This process involves more complex chemistry because it depends on how materials absorb and reflect light at the molecular level.<br /><br />
               In this project, we will focus only on additive (light-based) colour mixing and will not discuss subtractive, substance-based mixing.</p>
           </div>
         </div>
