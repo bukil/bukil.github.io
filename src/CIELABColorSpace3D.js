@@ -197,7 +197,7 @@ export default function CIELABColorSpace3D() {
           axisGroup.add(negLabel);
         }
         // L* (treat negative as dark / low lightness, positive as high lightness)
-        addBidirectional(new THREE.Vector3(0,1,0), colYPos, colYNeg, 'L* High', 'L* Low');
+        addBidirectional(new THREE.Vector3(0,1,0), colYPos, colYNeg, 'b* Yellow', 'b* Blue');
         
         // Determine X Axis Labels
         const xPosHue = getDominantHueName(colXPos);
@@ -205,7 +205,7 @@ export default function CIELABColorSpace3D() {
         let xLabelPos = '+a* (red)', xLabelNeg = '-a* (green)'; // default
         if (xPosHue === 'yellow' || xNegHue === 'blue') { xLabelPos = '+b* (yellow)'; xLabelNeg = '-b* (blue)'; }
         else if (xPosHue === 'blue' || xNegHue === 'yellow') { xLabelPos = '-b* (blue)'; xLabelNeg = '+b* (yellow)'; }
-        else if (xPosHue === 'green' || xNegHue === 'red') { xLabelPos = '-a* (green)'; xLabelNeg = '+a* (red)'; }
+        else if (xPosHue === 'green' || xNegHue === 'red') { xLabelPos = 'L* (High)'; xLabelNeg = '+L* (Low)'; }
         
         addBidirectional(new THREE.Vector3(1,0,0), colXPos, colXNeg, xLabelPos, xLabelNeg);
 
@@ -213,7 +213,7 @@ export default function CIELABColorSpace3D() {
         const zPosHue = getDominantHueName(colZPos);
         const zNegHue = getDominantHueName(colZNeg);
         let zLabelPos = '+b* (yellow)', zLabelNeg = '-b* (blue)'; // default
-        if (zPosHue === 'red' || zNegHue === 'green') { zLabelPos = '+a* (red)'; zLabelNeg = '-a* (green)'; }
+        if (zPosHue === 'red' || zNegHue === 'green') { zLabelPos = 'a* (Green)'; zLabelNeg = 'a* (Red)'; }
         else if (zPosHue === 'green' || zNegHue === 'red') { zLabelPos = '-a* (green)'; zLabelNeg = '+a* (red)'; }
         else if (zPosHue === 'blue' || zNegHue === 'yellow') { zLabelPos = '-b* (blue)'; zLabelNeg = '+b* (yellow)'; }
         
@@ -224,6 +224,7 @@ export default function CIELABColorSpace3D() {
         contentGroup.add(axisGroup);
         contentGroup.rotation.y = Math.PI / 4; // Rotate 45 degrees anticlockwise
         scene.add(contentGroup);
+        contentGroupRef = contentGroup;
 
         controls.target.set(0, 0, 0);
         controls.update();
@@ -233,10 +234,13 @@ export default function CIELABColorSpace3D() {
     );
 
     let rafId;
+    let contentGroupRef = null;
     const animate = () => {
       rafId = requestAnimationFrame(animate);
       controls.update();
-      // Removed automatic self-rotation per request
+      if (contentGroupRef) {
+        contentGroupRef.rotation.y += 0.002; // Slow rotation
+      }
       renderer.render(scene, camera);
     };
     animate();

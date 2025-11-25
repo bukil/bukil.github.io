@@ -202,7 +202,7 @@ html::-webkit-scrollbar, body::-webkit-scrollbar { width: 0; height: 0; }
   .what-is-grid { grid-column: auto; justify-content: stretch; margin-top: 0.8rem; }
   .what-is-grid .color-palette { width: 100%; }
 }
-.credits-list { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:.35rem; max-width:780px; font-size:14px; }
+.credits-list { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:1.2rem; max-width:780px; font-size:14px; }
 .credits-list li { font-size:14px; letter-spacing:.08px; line-height:1.35; }
 .credits-list a { color:#222; text-decoration:none; border:0; padding:.05rem 0; transition:color .25s; }
 .credits-list a:hover, .credits-list a:focus-visible { color:#000; }

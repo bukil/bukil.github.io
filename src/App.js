@@ -357,22 +357,48 @@ function App() {
         <h2 id="references-heading" className="credits-title garamond">REFERENCES</h2>
         <div className="credits-divider" aria-hidden="true" />
         <ul className="credits-list" aria-label="Contributor list">
-          <li><span className="contrib-item">[1] </span></li>
-          <li><span className="contrib-item">[2]</span></li>
-          <li><span className="contrib-item">[3]</span></li>
-          <li><span className="contrib-item">[4]</span></li>
+          <li><span className="contrib-item">[1] Peruzzi, Giulio, and Valentina Roberti. 2023. “Helmholtz and the Geometry of Color Space: Gestation and Development of Helmholtz’s Line Element.” <i>Archive for History of Exact Sciences</i> 77: 201–220. <a href="https://doi.org/10.1007/s00407-023-00304-2" target="_blank" rel="noopener noreferrer">https://doi.org/10.1007/s00407-023-00304-2</a>.</span></li>
+          
+          <li><span className="contrib-item">[2] Fong, James, Hannah K. Doyle, Congli Wang, Alexandra E. Boehm, Sofie R. Herbeck, Vimal Prabhu Pandiyan, Brian P. Schmidt, et al. 2025. “Novel Color via Stimulation of Individual Photoreceptors at Population Scale.” <i>Science Advances</i> 11 (18): eadu1052. <a href="https://doi.org/10.1126/sciadv.adu1052" target="_blank" rel="noopener noreferrer">https://doi.org/10.1126/sciadv.adu1052</a>.</span></li>
+          
+          <li><span className="contrib-item">[3] Puls, Thomas. 2025. “Chromaticity Preserving Analytic Approximations to the CIE Color Matching Functions.” <i>Journal of Computer Graphics Techniques</i> 14 (1): 1–20.</span></li>
+          
+          <li><span className="contrib-item">[4] Chou, Tzren-Ru, and Yi-Zhen Wang. 2024. “A Study on Color Theme Generation Using Convolutional Neural Networks.” <i>Proceedings of the 6th World Symposium on Software Engineering (WSSE 2024)</i>, Kyoto, Japan, 1–6. <a href="https://doi.org/10.1145/3698062.3698103" target="_blank" rel="noopener noreferrer">https://doi.org/10.1145/3698062.3698103</a>.</span></li>
+          
+          <li><span className="contrib-item">[5] Milotta, Filippo L. M., Filippo Stanco, Davide Tanasi, and Anna M. Gueli. 2018. “Munsell Color Specification Using ARCA (Automatic Recognition of Color for Archaeology).” <i>ACM Journal on Computing and Cultural Heritage</i> 11 (4): 17:1–17:15. <a href="https://doi.org/10.1145/3216463" target="_blank" rel="noopener noreferrer">https://doi.org/10.1145/3216463</a>.</span></li>
+          
+          <li><span className="contrib-item">[6] Bujack, Roxana, Emily Teti, Jonah Miller, Elektra Caffrey, and Terece L. Turton. 2022. “The Non-Riemannian Nature of Perceptual Color Space.” <i>Proceedings of the National Academy of Sciences</i> 119 (18): e2119753119. <a href="https://doi.org/10.1073/pnas.2119753119" target="_blank" rel="noopener noreferrer">https://doi.org/10.1073/pnas.2119753119</a>.</span></li>
+          
+          <li><span className="contrib-item">[7] MacAdam, David L. 1942. “Visual Sensitivities to Color Differences in Daylight.” <i>Journal of the Optical Society of America</i> 32 (5): 247–274.</span></li>
         </ul>
       </section>
 
       <section id="footnotes" data-topic="Footnotes" className="credits-section" aria-labelledby="footnotes-heading">
         <h2 id="footnotes-heading" className="credits-title garamond">FOOTNOTES</h2>
         <div className="credits-divider" aria-hidden="true" />
-        <ul className="credits-list" aria-label="Contributor list">
-          <li><span className="contrib-item single-line">This project was carried out as part of Project 2 at IDC, IIT Bombay, under the guidance of <a className="prof-link" href="https://www.idc.iitb.ac.in/people/phd/girish-vinod-dalvi" target="_blank" rel="noopener noreferrer">Professor Girish Dalvi.</a></span></li>
-          <li><span className="contrib-item">xxxxxx – Data Geometry</span></li>
-          <li><span className="contrib-item">xxxxxx – Spectral Models</span></li>
-          <li><span className="contrib-item">xxxxxx – Interaction Design</span></li>
-          <li><span className="contrib-item">xxxxxx – Visualization Engine</span></li>
+        <ul className="credits-list" aria-label="Footnotes list">
+          <li><span className="contrib-item">1. HSV and related models in the prototype are simplified, hard coded interpretations of RGB. They support real time interaction but are not perceptually uniform.</span></li>
+          <li><span className="contrib-item">2. Opponent process theory shapes the hue circle. Some spectral hues fall outside the RGB gamut, so the model compresses or clips them.</span></li>
+          <li><span className="contrib-item">3. Additive and subtractive mixing are approximations. True mixing depends on full spectral curves, which the system does not compute.</span></li>
+          <li><span className="contrib-item">4. Display gamut limits, ambient light, and screen brightness shift how colors appear. Parts of the color space cannot be shown accurately on sRGB displays.</span></li>
+          <li><span className="contrib-item">5. Interaction methods influence perception. Rotations, scaling, and gesture navigation can exaggerate or soften relationships between hue, saturation, and value.</span></li>
+          <li><span className="contrib-item">6. Continuous color spaces are discretised into meshes for rendering. This introduces mild banding and geometric artifacts.</span></li>
+          <li><span className="contrib-item">7. The RGB to HSV transform uses a fast piecewise formulation without gamma correction. The CIELAB conversion uses a hard coded white point and an approximate XYZ matrix.</span></li>
+          <li><span className="contrib-item">8. The wavelength feature uses a polynomial fit to estimate RGB from wavelength. Full spectral rendering is not possible within real time constraints.</span></li>
+          <li><span className="contrib-item">9. Hue slices and 3D geometry use cylindrical coordinates sampled on a finite grid, introducing slight quantisation in curves and transitions.</span></li>
+          <li><span className="contrib-item">10. Distance in perceptual space is shown with ΔE from CIELAB. This metric is an approximation and not the full ΔE2000 standard.</span></li>
+          <li><span className="contrib-item">11. Shader calculations run in single precision and may show small rounding differences between devices.</span></li>
+          <li><span className="contrib-item">12. Procedural meshes approximate curvature with vertex normals instead of exact analytic surfaces, producing minor deviations from ideal models.</span></li>
+          <li><span className="contrib-item">13. The RGB to HSV conversion in the prototype follows the standard piecewise formulation h = atan2(√3 (G−B), 2R−G−B), s = (max−min)/max, v = max. This representation is simplified and omits gamma correction for speed.</span></li>
+          <li><span className="contrib-item">14. The RGB to CIELAB mapping uses an approximate sRGB to XYZ transform, followed by L* = 116 f(Y/Yn) − 16, a* = 500 (f(X/Xn) − f(Y/Yn)), b* = 200 (f(Y/Yn) − f(Z/Zn)), where f is a piecewise cube root function. The reference white values are hard coded and not device calibrated.</span></li>
+          <li><span className="contrib-item">15. The internal wavelength approximation uses a polynomial fit to estimate RGB from a given λ in the range 380 to 700 nm. True spectral integration would require summing over response curves, which is not feasible in real time.</span></li>
+          <li><span className="contrib-item">16. The project visualises hue-slices by sampling points on cylindrical coordinates x = r cos θ, y = r sin θ, z = v, with r and θ derived from saturation and hue. The sampling grid is finite and introduces quantisation in the rendered geometry.</span></li>
+          <li><span className="contrib-item">17. The interactive wavelength animation maps frequency to position using E = hcλ<sup>-1</sup>, but is displayed through an RGB pipeline, which loses the full spectral resolution and compresses violet and red regions disproportionately.</span></li>
+          <li><span className="contrib-item">18. Gamut boundaries are approximated using triangular RGB interpolation rather than the full convex hull of the device gamut in CIE xyY space. This keeps computation light but underrepresents extreme saturated colors.</span></li>
+          <li><span className="contrib-item">19. The perceptual uniformity demonstration relies on calculating Euclidean distances in CIELAB, ΔE = √((ΔL*)² + (Δa*)² + (Δb*)²). This metric is an approximation; ΔE2000 would be more accurate but is computationally heavier.</span></li>
+          <li><span className="contrib-item">20. Interpolation between interaction states uses linear blending of hue values, even though hue is circular. Minor discontinuities occur when wrapping near 0 or 360 degrees.</span></li>
+          <li><span className="contrib-item">21. Shader based color transforms use single precision floating point arithmetic. Precision limits introduce small rounding errors at high saturation or low value levels.</span></li>
+          <li><span className="contrib-item">22. The prototype’s 3D geometric models are constructed with procedurally generated meshes. Curvature is approximated with vertex normals rather than analytical surfaces, producing small deviations from ideal geometry.</span></li>
         </ul>
       </section>
 
@@ -381,10 +407,7 @@ function App() {
         <div className="credits-divider" aria-hidden="true" />
         <ul className="credits-list" aria-label="Contributor list">
           <li><span className="contrib-item single-line">This project was carried out as part of Project 2 at IDC, IIT Bombay, under the guidance of <a className="prof-link" href="https://www.idc.iitb.ac.in/people/phd/girish-vinod-dalvi" target="_blank" rel="noopener noreferrer">Professor Girish Dalvi.</a></span></li>
-          <li><span className="contrib-item single-line">Data Geometry <a className="prof-link" href="https://in.linkedin.com/in/sumant-rao-a5aaa042" target="_blank" rel="noopener noreferrer">XXXXXXXXX.</a></span></li>
-          <li><span className="contrib-item">xxxxxx – </span></li>
-          <li><span className="contrib-item">xxxxxx – </span></li>
-          <li><span className="contrib-item">xxxxxx – </span></li>
+          <li><span className="contrib-item single-line">Special thanks to Professor Jayesh Pillai and Professor Venkatesh Rajamanickam for their valuable feedback on the stage presentations.</span></li>
         </ul>
       </section>
       <Footer />
