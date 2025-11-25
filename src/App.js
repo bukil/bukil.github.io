@@ -12,6 +12,7 @@ import RGBColorSpace3D from './RGBColorSpace3D';
 import HSVColorSpace3D from './HSVColorSpace3D';
 import CIELABColorSpace3D from './CIELABColorSpace3D';
 import ColorMixer from './ColorMixer';
+import GamutDiagram from './GamutDiagram';
 
 function App() {
   const [hueDeg, setHueDeg] = useState(0);
@@ -358,6 +359,11 @@ function App() {
           <br /><br />
           Unlike the mixture of signals we usually perceive, these isolated signals can produce intense, pure color sensations—such as a "white" from a single red cone or colors that defy the traditional opponent-process theory. This research suggests that our brain's color processing is even more complex and plastic than previously thought, opening the door to experiencing colors that lie outside the limits of the visible spectrum and current display technologies.
         </div>
+      </section>
+
+      <section id="srgb-space" data-topic="SRGB Color Space" className="credits-section" aria-labelledby="srgb-heading">
+        <h2 id="srgb-heading" className="credits-title garamond">SRGB Color space</h2>
+        <GamutDiagram />
       </section>
 
       
