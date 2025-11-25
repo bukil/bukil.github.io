@@ -36,9 +36,9 @@ export default function ColorPalette({ type = 'hs', cols = 22, rows = 8, value =
   const gridStyle = { gridTemplateColumns: `repeat(${cols}, 1fr)` };
 
   return (
-    <div className="color-palette" role="list" aria-label={`Color palette ${type}`} style={gridStyle}>
+    <div className="color-palette" role="list" aria-label={`Colour palette ${type}`} style={gridStyle}>
       {colors.map((c, i) => (
-        <div key={i} role="listitem" className="color-swatch" title={c} aria-label={`color ${c}`} style={{ background: c }} />
+        <div key={i} role="listitem" className="color-swatch" title={c} aria-label={`colour ${c}`} style={{ background: c }} />
       ))}
     </div>
   );

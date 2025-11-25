@@ -1,6 +1,6 @@
 import React from 'react';
 
-const GamutDiagram = () => {
+const GamutDiagram = ({ variant = 'srgb' }) => {
   // Dimensions
   const width = 600;
   const height = 650;
@@ -196,9 +196,24 @@ const GamutDiagram = () => {
 
         {/* SRGB Label */}
         <g transform={`translate(${scaleX(0.55)}, ${scaleY(0.55)})`}>
-            <text x="0" y="0" fontSize="14" fontFamily="monospace">SRGB</text>
+            {variant === 'olo' ? (
+              <text x="0" y="0" fontSize="12" fontFamily="monospace">
+                <tspan x="0" dy="-1.2em">Normal range of</tspan>
+                <tspan x="0" dy="1.2em">human colour vision</tspan>
+              </text>
+            ) : (
+              <text x="0" y="0" fontSize="14" fontFamily="monospace">SRGB</text>
+            )}
             <line x1="10" y1="5" x2="-50" y2="60" stroke="black" strokeWidth="1" />
         </g>
+
+        {/* Olo Dot */}
+        {variant === 'olo' && (
+          <g>
+             <circle cx={scaleX(0.18)} cy={scaleY(0.68)} r={6} fill="cyan" stroke="black" strokeWidth="1" />
+             <text x={scaleX(0.18) + 12} y={scaleY(0.68) + 5} fontSize="14" fontWeight="bold" fontFamily="monospace">OLO</text>
+          </g>
+        )}
 
       </svg>
     </div>

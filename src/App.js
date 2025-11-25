@@ -28,7 +28,7 @@ function App() {
   const [radiusPct3, setRadiusPct3] = useState(100);
   return (
     <div className="App">
-      <h3 id="hero" data-topic="XXXXXXXXX of color" className="hero-title playfair">Space of color</h3>
+      <h3 id="hero" data-topic="Space of colour" className="hero-title playfair">Space of colour</h3>
       <div id="intro" className="three-intro full-bleed" aria-label="3D introduction scene">
         <ProjectorScene />
       </div>
@@ -44,7 +44,7 @@ function App() {
           <div className="intro-meta" style={{ marginTop: '1.2rem', textAlign: 'center' }}>
             <div className="intro-meta__name">MUKIL KUMAR</div>
             <div className="intro-meta__org">IDC IIT Bombay</div>
-            <div className="intro-meta__date">MM 2026</div>
+            <div className="intro-meta__date">November 2026</div>
           </div>
         </div>
       </section>
@@ -76,7 +76,7 @@ function App() {
           </div>
           {/* Right column retains heading and explanatory text */}
           <div className="intro-col">
-            <h2 id="types-heading" className="credits-title garamond">TYPES OF COLOR MIXTURE</h2>
+            <h2 id="types-heading" className="credits-title garamond">TYPES OF COLOUR MIXTURE</h2>
             <p className="intro-text">Additive and subtractive colour mixing are two basic ways of creating colours. Additive colour mixing happens when different coloured lights combine, mainly red, green, and blue (RGB). When these lights overlap, they form new colours. For example, red and green make yellow, and combining all three gives white light. This method is used in digital screens and displays.<br /><br />
               Subtractive colour mixing works with pigments, inks, or filters that absorb some wavelengths of light and reflect others, usually using cyan, magenta, and yellow (CMY). When these pigments mix, more light is absorbed, creating darker colours, and mixing all three can make black. This process involves more complex chemistry because it depends on how materials absorb and reflect light at the molecular level.<br /><br />
               In this project, we will focus only on additive (light-based) colour mixing and will not discuss subtractive, substance-based mixing.</p>
@@ -86,15 +86,15 @@ function App() {
 
       {/* Physical Models of Color section */}
       <section id="physical-models" className="credits-section" aria-labelledby="physical-heading">
-        <h2 id="physical-heading" className="credits-title garamond">PHYSICAL MODELS OF COLOR</h2>
+        <h2 id="physical-heading" className="credits-title garamond">PHYSICAL MODELS OF COLOUR</h2>
         <div className="physical-spectrum-full">
           <h3 className="credits-title" style={{ fontSize: '1.15rem', marginTop: '1.5rem', textAlign: 'left' }}>The Visible Spectrum</h3>
-          <p className="intro-text">We can decompose sunlight using a glass prism. This process reveals the individual colour of each wavelength, which are the colors of the rainbow: red, yellow, green, cyan, and blue-violet. This visible spectrum is our first color space; it is a 1-dimensional space that contains all "pure" colors, with each corresponding to a single wavelength. In reality, other waves like infrared and ultraviolet exist on either side of this spectrum, but our eyes cannot detect them.</p>
+          <p className="intro-text">We can decompose sunlight using a glass prism. This process reveals the individual colour of each wavelength, which are the colours of the rainbow: red, yellow, green, cyan, and blue-violet. This visible spectrum is our first colour space; it is a 1-dimensional space that contains all "pure" colours, with each corresponding to a single wavelength. In reality, other waves like infrared and ultraviolet exist on either side of this spectrum, but our eyes cannot detect them.</p>
           <VisibleSpectrumCanvas width={700} height={300} />
           <figcaption className="global-caption">Electro magnetic spectrum</figcaption>
           <div className="intro-text" style={{ maxWidth: 700, margin: '1.2rem auto 2.2rem auto', fontSize: '14px', textAlign: 'justify', fontWeight: 400, fontFamily: 'NewYork Local, Georgia, Times New Roman, serif' }}>
-            The Sun is always sending energy to Earth in the form of electromagnetic waves. We can only see a small part of these waves — the part we call visible light. Sunlight looks white, but it is actually made of many different colours that our brain mixes together.<br /><br />
-            Our eyes have two kinds of cells that react to light — rods and cones. Rods help us see in dim light or at night, while cones let us see colours when it is bright.<br /><br />
+            The Sun is always sending energy to Earth in the form of electromagnetic waves. We can only see a small part of these waves, the part we call visible light. Sunlight looks white, but it is actually made of many different colours that our brain mixes together.<br /><br />
+            Our eyes have two kinds of cells that react to light, rods and cones. Rods help us see in dim light or at night, while cones let us see colours when it is bright.<br /><br />
             There are three types of cone cells, and each one reacts to a different colour of light:<br />
             <ul style={{ marginTop: '0.5rem', marginBottom: '0.5rem', paddingLeft: '1.2em' }}>
               <li>S-cones: Sensitive to short wavelengths, mostly blue light (around 420 nm).</li>
@@ -115,30 +115,30 @@ function App() {
               <figcaption className="global-caption">Relative response of cones and rods vs wavelength</figcaption>
             </div>
             <div className="intro-text" style={{ maxWidth: 700, margin: '1.2rem auto 2.2rem auto', fontSize: '14px', textAlign: 'justify', fontWeight: 400, fontFamily: 'NewYork Local, Georgia, Times New Roman, serif' }}>
-              When light hits these cones, it starts a chain of chemical reactions that send signals to the brain, which then interprets them as color. When the wavelengths overlap, two types of cones are activated at once, and we see a mixed color, like purple.<br /><br />
+              When light hits these cones, it starts a chain of chemical reactions that send signals to the brain, which then interprets them as colour. When the wavelengths overlap, two types of cones are activated at once, and we see a mixed colour, like purple.<br /><br />
               However, our eyes don’t respond equally to all wavelengths. They are most sensitive to green light, somewhat less to red, and least to blue.<br /><br />
               This means that light with the same energy can appear to have different brightness depending on its wavelength. For instance, green light at 555 nm looks brighter than blue light at 450 nm, even if both have equal energy.
             </div>
-            <h2 className="credits-title garamond" style={{ textAlign: 'left', fontSize: '1.35rem', margin: '2.2rem 0 0.8rem 0' }}>COLOR SPACE</h2>
+            <h2 className="credits-title garamond" style={{ textAlign: 'left', fontSize: '1.35rem', margin: '2.2rem 0 0.8rem 0' }}>COLOUR SPACE</h2>
             <div className="intro-text" style={{ width: '100%', maxWidth: '100%', margin: '0 0 2.2rem 0', fontSize: '14px', textAlign: 'justify', fontWeight: 400, fontFamily: 'NewYork Local, Georgia, Times New Roman, serif' }}>
-              A color space is a specific system used to represent and organize colors in a consistent way, so that different devices, like cameras, monitors, and printers can capture, display, and reproduce the same colors accurately.<br /><br />
-              For instance, the RGB color space is used in digital screens, where colors are created by combining red, green, and blue light. On the other hand, printers use the CMYK color space, which mixes cyan, magenta, yellow, and black inks to produce a similar range of colors on paper.
+              A colour space is a specific system used to represent and organize colours in a consistent way, so that different devices, like cameras, monitors, and printers can capture, display, and reproduce the same colours accurately.<br /><br />
+              For instance, the RGB colour space is used in digital screens, where colours are created by combining red, green, and blue light. On the other hand, printers use the CMYK colour space, which mixes cyan, magenta, yellow, and black inks to produce a similar range of colours on paper.
             </div>
             {/* Colorpicker PNG grid row */}
             <div className="colorpicker-image-row" style={{ width: '100%', margin: '2.2rem 0', display: 'flex', justifyContent: 'center', gap: '2rem', background: '#fff', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.08)', alignItems: 'center', padding: '1rem 0' }}>
-              <img src={process.env.PUBLIC_URL + '/colorpicker.png'} alt="Color Picker 1" style={{ width: '220px', height: '220px', objectFit: 'contain', borderRadius: '12px' }} />
-              <img src={process.env.PUBLIC_URL + '/colorpicker2.png'} alt="Color Picker 2" style={{ width: '220px', height: '220px', objectFit: 'contain', borderRadius: '12px' }} />
-              <img src={process.env.PUBLIC_URL + '/colorpicker3.png'} alt="Color Picker 3" style={{ width: '220px', height: '220px', objectFit: 'contain', borderRadius: '12px' }} />
+              <img src={process.env.PUBLIC_URL + '/colorpicker.png'} alt="Colour Picker 1" style={{ width: '220px', height: '220px', objectFit: 'contain', borderRadius: '12px' }} />
+              <img src={process.env.PUBLIC_URL + '/colorpicker2.png'} alt="Colour Picker 2" style={{ width: '220px', height: '220px', objectFit: 'contain', borderRadius: '12px' }} />
+              <img src={process.env.PUBLIC_URL + '/colorpicker3.png'} alt="Colour Picker 3" style={{ width: '220px', height: '220px', objectFit: 'contain', borderRadius: '12px' }} />
             </div>
             {/* Move RGB Color Space here, directly after the three images row */}
-            <h3 className="credits-title" style={{ fontSize: '1.15rem', marginTop: '1.5rem', fontFamily: 'NewYork Web, Georgia, Times New Roman, serif' }}>RGB Color Space</h3>
+            <h3 className="credits-title" style={{ fontSize: '1.15rem', marginTop: '1.5rem', fontFamily: 'NewYork Web, Georgia, Times New Roman, serif' }}>RGB Colour Space</h3>
             <div style={{ width: '100%', display: 'grid', gridTemplateColumns: '400px 1fr', gap: '2.2rem', alignItems: 'start', margin: '2.2rem 0' }}>
               <div style={{ width: '400px', height: '400px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <RGBColorSpace3D />
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}>
                 <div className="intro-text" style={{ fontSize: '15px', color: '#222', fontFamily: 'NewYork Local, Georgia, Times New Roman, serif', lineHeight: 1.7, marginBottom: '1.2rem' }}>
-                  The RGB color space is a three-dimensional cube where each axis represents one of the primary colors: Red, Green, and Blue. Every point inside the cube corresponds to a unique color created by mixing different intensities of these three components. The origin (0,0,0) is black, while the far corner (1,1,1) is white. Pure red, green, and blue are found at the ends of their respective axes. This space is fundamental to digital screens and imaging, as it models how colors are generated by light.
+                  The RGB colour space is a three-dimensional cube where each axis represents one of the primary colours: Red, Green, and Blue. Every point inside the cube corresponds to a unique colour created by mixing different intensities of these three components. The origin (0,0,0) is black, while the far corner (1,1,1) is white. Pure red, green, and blue are found at the ends of their respective axes. This space is fundamental to digital screens and imaging, as it models how colours are generated by light.
                 </div>
                 <ul style={{ fontSize: '14px', color: '#444', marginLeft: '1.2em' }}>
                   <li><b>Red axis :</b> Controls the intensity of red.</li>
@@ -152,12 +152,12 @@ function App() {
 
             <div className="intro-text" style={{ width: '100%', maxWidth: '100%', margin: '0 0 2.2rem 0', fontSize: '14px', textAlign: 'justify', fontWeight: 400, fontFamily: 'NewYork Local, Georgia, Times New Roman, serif' }}>
               <p style={{ marginTop: '0.5rem' }}>
-                The RGB color space is a way of representing colors using three basic components , Red (R), Green (G), and Blue (B). These three colors of light can be mixed in different amounts to create almost every color you see on a digital screen.
+                The RGB colour space is a way of representing colours using three basic components , Red (R), Green (G), and Blue (B). These three colours of light can be mixed in different amounts to create almost every colour you see on a digital screen.
               </p>
               <p style={{ marginTop: '0.25rem' }}>
                 • When all three are at full intensity, you get white light.<br />
                 • When all three are off, you get black.<br />
-                • Mixing two of them gives new colors , for example:
+                • Mixing two of them gives new colours , for example:
               </p>
               <div style={{ marginTop: '0.5rem', textAlign: 'center' }}>
                 <table style={{ margin: '0 auto', fontSize: '13px', borderCollapse: 'collapse', minWidth: 220 }}>
@@ -178,17 +178,17 @@ function App() {
                 </table>
               </div>
               <p style={{ marginTop: '0.5rem' }}>
-                This system is called additive color mixing, because the more light you add, the brighter the color becomes. It’s used in computer monitors, TVs, phone screens, and cameras, where light is emitted directly from the screen.
+                This system is called additive colour mixing, because the more light you add, the brighter the colour becomes. It’s used in computer monitors, TVs, phone screens, and cameras, where light is emitted directly from the screen.
               </p>
 
               <div className="intro-text" style={{ width: '100%', maxWidth: '100%', margin: '0 0 2.2rem 0', fontSize: '14px', textAlign: 'justify', fontWeight: 400, fontFamily: 'NewYork Local, Georgia, Times New Roman, serif' }}>
-                <p style={{ marginTop: '0.5rem', fontWeight: 700 }}>Why Colors Use the 0–255 Range</p>
+                <p style={{ marginTop: '0.5rem', fontWeight: 700 }}>Why Colours Use the 0–255 Range</p>
                 <p style={{ marginTop: '0.25rem' }}>
-                  Each color channel  Red, Green, and Blue   is stored as a number between 0 and 255.
+                  Each colour channel  Red, Green, and Blue   is stored as a number between 0 and 255.
                   This comes from how computers store data:
                 </p>
 
-                <p style={{ marginTop: '0.25rem' }}>8 bits (1 byte) can represent 256 possible values (from 0 to 255). So, each color channel uses one byte of memory.</p>
+                <p style={{ marginTop: '0.25rem' }}>8 bits (1 byte) can represent 256 possible values (from 0 to 255). So, each colour channel uses one byte of memory.</p>
 
 
                 <p style={{ marginTop: '0.25rem' }}>This means:</p>
@@ -218,21 +218,21 @@ function App() {
                     </tbody>
                   </table>
                 </div>
-                <p style={{ marginTop: '0.25rem' }}>By changing these numbers, your screen creates millions of color combinations.</p>
+                <p style={{ marginTop: '0.25rem' }}>By changing these numbers, your screen creates millions of colour combinations.</p>
               </div>
             </div>
-            <h3 className="credits-title" style={{ fontSize: '1.15rem', marginTop: '1.5rem', fontFamily: 'NewYork Web, Georgia, Times New Roman, serif' }}>HSV Color Space</h3>
+            <h3 className="credits-title" style={{ fontSize: '1.15rem', marginTop: '1.5rem', fontFamily: 'NewYork Web, Georgia, Times New Roman, serif' }}>HSV Colour Space</h3>
             <div style={{ width: '100%', display: 'grid', gridTemplateColumns: '400px 1fr', gap: '2.2rem', alignItems: 'start', margin: '2.2rem 0' }}>
               <div style={{ width: '400px', height: '400px', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
                 <HSVColorSpace3D hueDeg={hueDeg} ballHeight={ballHeight} radiusPct={radiusPct} />
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}>
                 <div className="intro-text" style={{ fontSize: '15px', color: '#222', fontFamily: 'NewYork Local, Georgia, Times New Roman, serif', lineHeight: 1.7, marginBottom: '1.2rem' }}>
-                  The HSV color space is represented as a cylinder, where colors are organized by Hue (angle around the cylinder), Saturation (distance from the center), and Value (height). This model is intuitive for artists and designers, as it separates color intensity from color type. The top of the cylinder is bright, the bottom is dark, and the center is gray.
+                  The HSV colour space is represented as a cylinder, where colours are organized by Hue (angle around the cylinder), Saturation (distance from the center), and Value (height). This model is intuitive for artists and designers, as it separates colour intensity from colour type. The top of the cylinder is bright, the bottom is dark, and the center is gray.
                 </div>
                 <ul style={{ fontSize: '14px', color: '#444', marginLeft: '1.2em' }}>
-                  <li><b>Hue:</b> The type of color, represented by the angle around the cylinder.</li>
-                  <li><b>Saturation:</b> The intensity or purity of the color, represented by the radius.</li>
+                  <li><b>Hue:</b> The type of colour, represented by the angle around the cylinder.</li>
+                  <li><b>Saturation:</b> The intensity or purity of the colour, represented by the radius.</li>
                   <li><b>Value:</b> The brightness, represented by the height.</li>
                 </ul>
                 {/* Controls: placed to the right of the canvas */}
@@ -316,23 +316,23 @@ function App() {
           </div>
         </div>
       </section>
-
-      <section id="color-space" data-topic="Color Space" className="credits-section" aria-labelledby="color-space-heading">
+<br/>
+      <section id="color-space" data-topic="Colour Space" className="credits-section" aria-labelledby="color-space-heading">
         <h2 id="color-space-heading" className="credits-title garamond">Munsell Colour Space</h2>
         <div className="intro-text" style={{ fontSize: '14px', color: '#444', marginTop: '0.6rem', lineHeight: 1.6, width: '100%', maxWidth: '100%' }}>
-          The Munsell color system is a way to describe colors using three clear qualities: hue, value, and chroma. Hue tells you the basic color family, value shows how light or dark the color is, and chroma tells how strong or dull the color looks. It is arranged like a three-dimensional space so each quality can change on its own. The system is based on how people actually see color, so it stays consistent, practical, and easy to compare across different uses.
+          The Munsell colour system is a way to describe colours using three clear qualities: hue, value, and chroma. Hue tells you the basic colour family, value shows how light or dark the colour is, and chroma tells how strong or dull the colour looks. It is arranged like a three-dimensional space so each quality can change on its own. The system is based on how people actually see colour, so it stays consistent, practical, and easy to compare across different uses.
         </div>
         <div style={{ width: '100%', marginTop: '1.6rem' }}>
           <MunsellColorSpace3D />
         </div>
         <div className="intro-text" style={{ fontSize: '14px', color: '#444', marginTop: '1.4rem', lineHeight: 1.6, width: '100%', maxWidth: '100%' }}>
-          The Munsell system has a distorted shape because human color vision is not evenly spaced. Our eyes notice some color changes more easily than others, so the space must stretch or squeeze to match how we actually see.
+          The Munsell system has a distorted shape because human colour vision is not evenly spaced. Our eyes notice some colour changes more easily than others, so the space must stretch or squeeze to match how we actually see.
           For example, we can see many small differences in green, so the green region expands. We see fewer differences in blue and yellow, so those regions become tighter. Chroma also does not increase equally for every hue, which bends the outer shape even more.
-          The result is a color space that looks uneven, but the unevenness is the point. It reflects the natural limits and sensitivities of human perception rather than forcing colors into a perfect geometric form.
+          The result is a colour space that looks uneven, but the unevenness is the point. It reflects the natural limits and sensitivities of human perception rather than forcing colours into a perfect geometric form.
         </div>
       </section>
 
-      <section id="cielab-space" data-topic="CIELAB Color Space" className="credits-section" aria-labelledby="cielab-heading" style={{ marginTop: '3.2rem' }}>
+      <section id="cielab-space" data-topic="CIELAB Colour Space" className="credits-section" aria-labelledby="cielab-heading" style={{ marginTop: '3.2rem' }}>
         <h2 id="cielab-heading" className="credits-title garamond">CIELAB Colour Space</h2>
         {/* Two-column layout: left explanatory text, right 3D model canvas */}
         <div style={{ display: 'grid', gridTemplateColumns: '400px 1fr', gap: '2.2rem', alignItems: 'start', marginTop: '1.2rem' }}>
@@ -352,15 +352,15 @@ function App() {
         </div>
       </section>
 
-      <section id="srgb-space" data-topic="SRGB Color Space" className="credits-section" aria-labelledby="srgb-heading">
-        <h2 id="srgb-heading" className="credits-title garamond">SRGB Color space</h2>
+      <section id="srgb-space" data-topic="SRGB Colour Space" className="credits-section" aria-labelledby="srgb-heading">
+        <h2 id="srgb-heading" className="credits-title garamond">SRGB Colour space</h2>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2.2rem', alignItems: 'start', marginTop: '1.2rem' }}>
           <div className="intro-text" style={{ fontSize: '14px', color: '#444', lineHeight: 1.6 }}>
-            The CIE 1931 chromaticity diagram represents all the colors visible to the average human eye. The horseshoe-shaped curve contains the spectral colors, ranging from violet (380 nm) to red (700 nm).
+            The CIE 1931 chromaticity diagram represents all the colours visible to the average human eye. The horseshoe-shaped curve contains the spectral colours, ranging from violet (380 nm) to red (700 nm).
             <br /><br />
-            The triangle inside represents the sRGB color gamut—the range of colors that standard screens and monitors can display. The three corners correspond to the primary red, green, and blue phosphors used in displays.
+            The triangle inside represents the sRGB colour gamut, the range of colours that standard screens and monitors can display. The three corners correspond to the primary red, green, and blue phosphors used in displays.
             <br /><br />
-            Any color inside the triangle can be reproduced by mixing these three primaries. However, the large area outside the triangle but inside the horseshoe represents visible colors that cannot be displayed on a standard sRGB screen, such as highly saturated cyans and greens.
+            Any colour inside the triangle can be reproduced by mixing these three primaries. However, the large area outside the triangle but inside the horseshoe represents visible colours that cannot be displayed on a standard sRGB screen, such as highly saturated cyans and greens.
           </div>
           <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <GamutDiagram />
@@ -371,10 +371,16 @@ function App() {
 
       <section id="new-colour" data-topic="New Colour !" className="credits-section" aria-labelledby="new-colour-heading">
         <h2 id="new-colour-heading" className="credits-title garamond">New Colour !</h2>
-        <div className="intro-text" style={{ fontSize: '14px', color: '#444', marginTop: '0.6rem', lineHeight: 1.6, width: '100%', maxWidth: '100%' }}>
-          Recent advancements in vision science, specifically using Adaptive Optics Scanning Laser Ophthalmoscopy (AO-SLO), have allowed researchers to bypass the eye's natural optics and stimulate individual cone photoreceptors directly. This precise stimulation has revealed the "Olo effect" (referring to the AO-SLO phenomenon), where activating single cones can trigger sensations of "novel colors" that do not exist in standard color spaces or natural viewing conditions.
-          <br /><br />
-          Unlike the mixture of signals we usually perceive, these isolated signals can produce intense, pure color sensations—such as a "white" from a single red cone or colors that defy the traditional opponent-process theory. This research suggests that our brain's color processing is even more complex and plastic than previously thought, opening the door to experiencing colors that lie outside the limits of the visible spectrum and current display technologies.
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2.2rem', alignItems: 'start', marginTop: '1.2rem' }}>
+          <div className="intro-text" style={{ fontSize: '14px', color: '#444', lineHeight: 1.6 }}>
+            Recent advancements in vision science, specifically using Adaptive Optics Scanning Laser Ophthalmoscopy (AO-SLO), have allowed researchers to bypass the eye's natural optics and stimulate individual cone photoreceptors directly. This precise stimulation has revealed the "Olo effect" (referring to the AO-SLO phenomenon), where activating single cones can trigger sensations of "novel colours" that do not exist in standard colour spaces or natural viewing conditions.
+            <br /><br />
+            Unlike the mixture of signals we usually perceive, these isolated signals can produce intense, pure colour sensations, such as a "white" from a single red cone or colours that defy the traditional opponent-process theory. This research suggests that our brain's colour processing is even more complex and plastic than previously thought, opening the door to experiencing colours that lie outside the limits of the visible spectrum and current display technologies.
+          </div>
+          <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <GamutDiagram variant="olo" />
+            <figcaption className="global-caption" style={{ marginTop: '0' }}>Olo colour in colour space</figcaption>
+          </div>
         </div>
       </section>
 

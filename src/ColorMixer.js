@@ -253,7 +253,7 @@ export default function ColorMixer(){
   return (
     <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start', marginTop: '1rem', flexWrap: 'wrap' }}>
       <div style={{ minWidth: 260 }}>
-        <h4 className="credits-title" style={{ fontSize: '1rem', margin: '0 0 0.6rem 0' }}>Interactive Color Mixer</h4>
+        <h4 className="credits-title" style={{ fontSize: '1rem', margin: '0 0 0.6rem 0' }}>Interactive Colour Mixer</h4>
         <p className="intro-text" style={{ fontSize: 13 }}>Choose two colours and a mixing mode. <b>Additive</b> simulates mixing light (RGB add). <b>Subtractive</b> simulates mixing pigments (CMY-style overlay).</p>
         <div style={{ display: 'flex', gap: '0.8rem', marginTop: '0.6rem', alignItems: 'center' }}>
           <div>
