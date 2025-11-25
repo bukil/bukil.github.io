@@ -142,7 +142,6 @@ export default function CIELABColorSpace3D() {
           axisGroup.add(negLabel);
         }
         // L* axis (single direction upward 0→100)
-        const lDir = new THREE.Vector3(0,1,0);
         const lLine = new THREE.Line(new THREE.BufferGeometry().setFromPoints([
           new THREE.Vector3(0,0,0), new THREE.Vector3(0,axisLen,0)
         ]), new THREE.LineBasicMaterial({ color: 0x555555 }));
