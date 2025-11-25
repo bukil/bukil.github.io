@@ -352,15 +352,6 @@ function App() {
         </div>
       </section>
 
-      <section id="new-colour" data-topic="New Colour !" className="credits-section" aria-labelledby="new-colour-heading">
-        <h2 id="new-colour-heading" className="credits-title garamond">New Colour !</h2>
-        <div className="intro-text" style={{ fontSize: '14px', color: '#444', marginTop: '0.6rem', lineHeight: 1.6, width: '100%', maxWidth: '100%' }}>
-          Recent advancements in vision science, specifically using Adaptive Optics Scanning Laser Ophthalmoscopy (AO-SLO), have allowed researchers to bypass the eye's natural optics and stimulate individual cone photoreceptors directly. This precise stimulation has revealed the "Olo effect" (referring to the AO-SLO phenomenon), where activating single cones can trigger sensations of "novel colors" that do not exist in standard color spaces or natural viewing conditions.
-          <br /><br />
-          Unlike the mixture of signals we usually perceive, these isolated signals can produce intense, pure color sensations—such as a "white" from a single red cone or colors that defy the traditional opponent-process theory. This research suggests that our brain's color processing is even more complex and plastic than previously thought, opening the door to experiencing colors that lie outside the limits of the visible spectrum and current display technologies.
-        </div>
-      </section>
-
       <section id="srgb-space" data-topic="SRGB Color Space" className="credits-section" aria-labelledby="srgb-heading">
         <h2 id="srgb-heading" className="credits-title garamond">SRGB Color space</h2>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2.2rem', alignItems: 'start', marginTop: '1.2rem' }}>
@@ -375,6 +366,15 @@ function App() {
             <GamutDiagram />
             <figcaption className="global-caption" style={{ marginTop: '0' }}>CIE 1931 Chromaticity Diagram showing sRGB Gamut</figcaption>
           </div>
+        </div>
+      </section>
+
+      <section id="new-colour" data-topic="New Colour !" className="credits-section" aria-labelledby="new-colour-heading">
+        <h2 id="new-colour-heading" className="credits-title garamond">New Colour !</h2>
+        <div className="intro-text" style={{ fontSize: '14px', color: '#444', marginTop: '0.6rem', lineHeight: 1.6, width: '100%', maxWidth: '100%' }}>
+          Recent advancements in vision science, specifically using Adaptive Optics Scanning Laser Ophthalmoscopy (AO-SLO), have allowed researchers to bypass the eye's natural optics and stimulate individual cone photoreceptors directly. This precise stimulation has revealed the "Olo effect" (referring to the AO-SLO phenomenon), where activating single cones can trigger sensations of "novel colors" that do not exist in standard color spaces or natural viewing conditions.
+          <br /><br />
+          Unlike the mixture of signals we usually perceive, these isolated signals can produce intense, pure color sensations—such as a "white" from a single red cone or colors that defy the traditional opponent-process theory. This research suggests that our brain's color processing is even more complex and plastic than previously thought, opening the door to experiencing colors that lie outside the limits of the visible spectrum and current display technologies.
         </div>
       </section>
 
