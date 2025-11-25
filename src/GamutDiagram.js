@@ -70,6 +70,29 @@ const GamutDiagram = () => {
 
   const trianglePath = `M ${scaleX(sRGB.r[0])},${scaleY(sRGB.r[1])} L ${scaleX(sRGB.g[0])},${scaleY(sRGB.g[1])} L ${scaleX(sRGB.b[0])},${scaleY(sRGB.b[1])} Z`;
 
+  // Helper to get projection of point P onto line segment AB
+  const getProjectedPoint = (px, py, ax, ay, bx, by) => {
+    const abx = bx - ax;
+    const aby = by - ay;
+    const apx = px - ax;
+    const apy = py - ay;
+    const t = (apx * abx + apy * aby) / (abx * abx + aby * aby);
+    return { x: ax + t * abx, y: ay + t * aby };
+  };
+
+  // Calculate projection points for gradients
+  const rx = scaleX(sRGB.r[0]), ry = scaleY(sRGB.r[1]);
+  const gx = scaleX(sRGB.g[0]), gy = scaleY(sRGB.g[1]);
+  const bx = scaleX(sRGB.b[0]), by = scaleY(sRGB.b[1]);
+
+  const projR = getProjectedPoint(rx, ry, gx, gy, bx, by);
+  const projG = getProjectedPoint(gx, gy, rx, ry, bx, by);
+  const projB = getProjectedPoint(bx, by, rx, ry, gx, gy);
+
+  // White point coordinates
+  const wx = scaleX(sRGB.w[0]);
+  const wy = scaleY(sRGB.w[1]);
+
   // Grid lines
   const gridLines = [];
   for (let i = 0; i <= 0.801; i += 0.05) { // Minor grid
@@ -96,6 +119,24 @@ const GamutDiagram = () => {
           <clipPath id="triangleClip">
             <path d={trianglePath} />
           </clipPath>
+
+          <linearGradient id="gradR" gradientUnits="userSpaceOnUse" x1={rx} y1={ry} x2={projR.x} y2={projR.y}>
+            <stop offset="0%" stopColor="#FF0000" />
+            <stop offset="100%" stopColor="#000000" />
+          </linearGradient>
+          <linearGradient id="gradG" gradientUnits="userSpaceOnUse" x1={gx} y1={gy} x2={projG.x} y2={projG.y}>
+            <stop offset="0%" stopColor="#00FF00" />
+            <stop offset="100%" stopColor="#000000" />
+          </linearGradient>
+          <linearGradient id="gradB" gradientUnits="userSpaceOnUse" x1={bx} y1={by} x2={projB.x} y2={projB.y}>
+            <stop offset="0%" stopColor="#0000FF" />
+            <stop offset="100%" stopColor="#000000" />
+          </linearGradient>
+          
+          <radialGradient id="gradW" gradientUnits="userSpaceOnUse" cx={wx} cy={wy} r={width * 0.5}>
+            <stop offset="0%" stopColor="#FFFFFF" />
+            <stop offset="100%" stopColor="#000000" />
+          </radialGradient>
         </defs>
 
         {/* Background Grid */}
@@ -128,11 +169,13 @@ const GamutDiagram = () => {
             <rect x="0" y="0" width={width} height={height} fill="black" />
             
             {/* Red Gradient */}
-            <circle cx={scaleX(sRGB.r[0])} cy={scaleY(sRGB.r[1])} r={width * 0.8} fill="red" style={{mixBlendMode: 'screen'}} />
+            <rect x="0" y="0" width={width} height={height} fill="url(#gradR)" style={{mixBlendMode: 'screen'}} />
             {/* Green Gradient */}
-            <circle cx={scaleX(sRGB.g[0])} cy={scaleY(sRGB.g[1])} r={width * 0.8} fill="#00ff00" style={{mixBlendMode: 'screen'}} />
+            <rect x="0" y="0" width={width} height={height} fill="url(#gradG)" style={{mixBlendMode: 'screen'}} />
             {/* Blue Gradient */}
-            <circle cx={scaleX(sRGB.b[0])} cy={scaleY(sRGB.b[1])} r={width * 0.8} fill="blue" style={{mixBlendMode: 'screen'}} />
+            <rect x="0" y="0" width={width} height={height} fill="url(#gradB)" style={{mixBlendMode: 'screen'}} />
+            {/* White Gradient (Center Boost) */}
+            <rect x="0" y="0" width={width} height={height} fill="url(#gradW)" style={{mixBlendMode: 'screen'}} />
         </g>
         
         {/* Triangle Outline */}
