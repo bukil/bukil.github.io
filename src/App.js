@@ -363,7 +363,19 @@ function App() {
 
       <section id="srgb-space" data-topic="SRGB Color Space" className="credits-section" aria-labelledby="srgb-heading">
         <h2 id="srgb-heading" className="credits-title garamond">SRGB Color space</h2>
-        <GamutDiagram />
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2.2rem', alignItems: 'start', marginTop: '1.2rem' }}>
+          <div className="intro-text" style={{ fontSize: '14px', color: '#444', lineHeight: 1.6 }}>
+            The CIE 1931 chromaticity diagram represents all the colors visible to the average human eye. The horseshoe-shaped curve contains the spectral colors, ranging from violet (380 nm) to red (700 nm).
+            <br /><br />
+            The triangle inside represents the sRGB color gamut—the range of colors that standard screens and monitors can display. The three corners correspond to the primary red, green, and blue phosphors used in displays.
+            <br /><br />
+            Any color inside the triangle can be reproduced by mixing these three primaries. However, the large area outside the triangle but inside the horseshoe represents visible colors that cannot be displayed on a standard sRGB screen, such as highly saturated cyans and greens.
+          </div>
+          <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <GamutDiagram />
+            <figcaption className="global-caption" style={{ marginTop: '0' }}>CIE 1931 Chromaticity Diagram showing sRGB Gamut</figcaption>
+          </div>
+        </div>
       </section>
 
       

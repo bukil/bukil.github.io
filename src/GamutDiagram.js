@@ -109,7 +109,7 @@ const GamutDiagram = () => {
   }
 
   return (
-    <div className="gamut-diagram" style={{ width: '100%', maxWidth: '600px', margin: '2rem auto', fontFamily: "'Courier New', monospace" }}>
+    <div className="gamut-diagram" style={{ width: '100%', maxWidth: '600px', margin: '-3rem auto 0 auto', fontFamily: "'Courier New', monospace" }}>
       <svg viewBox={`0 0 ${width} ${height}`} style={{ width: '100%', height: 'auto', overflow: 'visible' }}>
         <defs>
           <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
