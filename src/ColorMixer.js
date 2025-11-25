@@ -55,60 +55,25 @@ export default function ColorMixer(){
       const Bc = Math.min(1, A[2] + B[2]);
       return rgbNormToHex([linearToSrgb(R), linearToSrgb(G), linearToSrgb(Bc)]);
     }
-    // HSL utilities for approximate subtractive mixing (paints): hue circular mean, multiply saturations, darken lightness.
-    function hexToHsl(hex){
-      const [r,g,b] = hexToRgbNorm(hex).map(linearToSrgb); // ensure we are in perceptual-ish space
-      const max = Math.max(r,g,b), min = Math.min(r,g,b);
-      let h, s; const l = (max+min)/2;
-      if(max === min){ h = 0; s = 0; }
-      else {
-        const d = max - min;
-        s = l > 0.5 ? d/(2 - max - min) : d/(max + min);
-        switch(max){
-          case r: h = (g - b)/d + (g < b ? 6 : 0); break;
-          case g: h = (b - r)/d + 2; break;
-          case b: h = (r - g)/d + 4; break;
-          default: h = 0;
-        }
-        h *= 60;
-      }
-      return [h,s,l];
-    }
-    function hslToHex(h,s,l){
-      h = (h%360+360)%360;
-      if(s === 0){
-        return rgbNormToHex([l,l,l]);
-      }
-      const q = l < 0.5 ? l*(1+s) : l + s - l*s;
-      const p = 2*l - q;
-      const hk = h/360;
-      const tc = [hk + 1/3, hk, hk - 1/3].map(t=>{
-        if(t < 0) t += 1; if(t > 1) t -= 1;
-        if(t < 1/6) return p + (q - p)*6*t;
-        if(t < 1/2) return q;
-        if(t < 2/3) return p + (q - p)*(2/3 - t)*6;
-        return p;
-      });
-      return rgbNormToHex(tc);
-    }
-    function circularMean(h1,h2){
-      const r1 = h1*Math.PI/180, r2 = h2*Math.PI/180;
-      const x = Math.cos(r1) + Math.cos(r2);
-      const y = Math.sin(r1) + Math.sin(r2);
-      let ang = Math.atan2(y,x)*180/Math.PI;
-      if(ang < 0) ang += 360;
-      return ang;
-    }
+    // CMY-style subtractive mixing (overlay-like): convert to linear CMY, combine inks, convert back
     function subtractiveMix(h1,h2){
-      const [hA,sA,lA] = hexToHsl(h1);
-      const [hB,sB,lB] = hexToHsl(h2);
-      // If either is achromatic use other's hue
-      const hue = (sA === 0 && sB !== 0) ? hB : (sB === 0 && sA !== 0) ? hA : circularMean(hA,hB);
-      // Saturation: product to reduce intensity when mixing different pigments
-      const sat = Math.min(1, sA * sB * 1.15); // slight boost factor before product damping
-      // Lightness: combine by geometric mean then slight darkening
-      const light = Math.pow(lA * lB, 0.85);
-      return hslToHex(hue,sat,light);
+      const [r1s,g1s,b1s] = hexToRgbNorm(h1);
+      const [r2s,g2s,b2s] = hexToRgbNorm(h2);
+      const r1 = srgbToLinear(r1s), g1 = srgbToLinear(g1s), b1 = srgbToLinear(b1s);
+      const r2 = srgbToLinear(r2s), g2 = srgbToLinear(g2s), b2 = srgbToLinear(b2s);
+      const clamp01 = v => Math.max(0, Math.min(1, v));
+      // CMY in linear space
+      const c1 = 1 - r1, m1 = 1 - g1, y1 = 1 - b1;
+      const c2 = 1 - r2, m2 = 1 - g2, y2 = 1 - b2;
+      // Combine inks: more ink -> higher coverage (like overprint / screen blend inverse)
+      const C = 1 - (1 - c1) * (1 - c2);
+      const M = 1 - (1 - m1) * (1 - m2);
+      const Y = 1 - (1 - y1) * (1 - y2);
+      // Back to linear RGB
+      const rL = clamp01(1 - C);
+      const gL = clamp01(1 - M);
+      const bL = clamp01(1 - Y);
+      return rgbNormToHex([linearToSrgb(rL), linearToSrgb(gL), linearToSrgb(bL)]);
     }
     if(mode === 'additive'){
       return additiveMix(colorA,colorB);
@@ -180,10 +145,11 @@ export default function ColorMixer(){
       function waveParams(hex, baseAmp, alpha){
         const hue = hexToHue(hex); // 0..360
         const lambda = 650 - (hue/360)*250; // red ~650nm, violet ~400nm
-        // Higher frequency for shorter wavelength (blue/violet)
-        const freq = 0.010 + ((650 - lambda)/250)*0.050; // 0.010 .. 0.060
-        // Temporal speed scaled similarly for visual energy
-        const speed = 0.30 + ((650 - lambda)/250)*0.55; // 0.30 .. 0.85
+        const norm = (650 - lambda)/250; // 0 (red) .. 1 (violet)
+        // Increase frequency range so wavelengths are visibly shorter and more distinct
+        const freq = 0.050 + norm*0.230; // 0.050 .. 0.280
+        // Slightly higher temporal speed range to match tighter waves
+        const speed = 0.40 + norm*0.60; // 0.40 .. 1.00
         return { amp: baseAmp, freq, speed, color: toRGBA(hex, alpha) };
       }
       const waves = [
@@ -193,7 +159,7 @@ export default function ColorMixer(){
       ];
       waves.forEach((w,i)=>{
         ctx.beginPath();
-        for(let x=0;x<W;x+=2){
+        for(let x=0;x<W;x+=1){
           const y = H/2 + Math.sin((x*w.freq) + t*w.speed + i)*w.amp;
           if(x===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
         }
@@ -326,6 +292,9 @@ export default function ColorMixer(){
         >
           <div style={{ fontSize: 12, color: '#111', fontWeight: 700, pointerEvents: 'none' }}>{mode === 'additive' ? 'Light mix' : 'Pigment mix'}</div>
           <div style={{ marginTop: 6, fontSize: 12, pointerEvents: 'none' }}>{mixed}</div>
+          {mode === 'subtractive' && (
+            <div style={{ fontSize: 12, color: '#333', pointerEvents: 'none' }}>{toCmyDisplay(mixed)}</div>
+          )}
           {showLens && (
             <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', backdropFilter: 'blur(2px)', background: 'rgba(255,255,255,0.12)' }}>
               <div style={{ width: 132, height: 132, borderRadius: '50%', boxShadow: '0 4px 18px rgba(0,0,0,0.25)', border: '2px solid rgba(255,255,255,0.6)', overflow: 'hidden', background: mode==='additive' ? 'radial-gradient(circle at 50% 50%, #ffffff 0%, '+mixed+' 120%)' : mixed }}>
