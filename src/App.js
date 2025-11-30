@@ -432,6 +432,7 @@ function App() {
           <li><span className="contrib-item">20. Interpolation between interaction states uses linear blending of hue values, even though hue is circular. Minor discontinuities occur when wrapping near 0 or 360 degrees.</span></li>
           <li><span className="contrib-item">21. Shader based color transforms use single precision floating point arithmetic. Precision limits introduce small rounding errors at high saturation or low value levels.</span></li>
           <li><span className="contrib-item">22. The prototype’s 3D geometric models are constructed with procedurally generated meshes. Curvature is approximated with vertex normals rather than analytical surfaces, producing small deviations from ideal geometry.</span></li>
+          <li><span className="contrib-item">Study design test: <a href="https://bukil.github.io/test.idc/" target="_blank" rel="noopener noreferrer" style={{ color: '#0066cc', textDecoration: 'underline' }}>Access the test here</a>.</span></li>
         </ul>
       </section>
 
